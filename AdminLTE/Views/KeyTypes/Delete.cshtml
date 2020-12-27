@@ -1,0 +1,35 @@
+﻿@model AdminLTE.Models.KeyTypeView
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="form-horizontal">
+    <dl class="dl-horizontal">
+        <dt translate="description">
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt translate="code">
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Code)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div class="modal-button">
+                <div class="btn btn-danger" onclick="postForm(this, refreshList)" translate="delete"></div>
+            </div>
+        </div>
+    }
+</div>

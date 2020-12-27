@@ -1,0 +1,30 @@
+﻿@model IEnumerable<AdminLTE.Models.RoleView>
+@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Roller";
+}
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th translate="role-name">
+            </th>
+            <th class="th-process"></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleName)
+            </td>
+            <td>
+                <div onclick="editForm(this)" url="@Url.Action("Edit", new { id = item.Id })" class="btn btn-default btn-sm glyphicon glyphicon-edit"></div>
+                <div onclick="deleteForm(this)" url="@Url.Action("Delete", new { id = item.Id })" class="btn btn-default btn-sm glyphicon glyphicon-trash"></div>
+            </td>
+        </tr>
+    }
+
+</table>

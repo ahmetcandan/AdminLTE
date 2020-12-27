@@ -1,0 +1,109 @@
+﻿@using System.Web.Optimization
+@using WebHelpers.Mvc5.Enum
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        @if (!string.IsNullOrWhiteSpace(ViewBag.Title))
+        {
+            @ViewBag.Title@: -
+        }
+        LSN
+    </title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    @Styles.Render("~/Bundles/css")
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="overlay loading-div" id="loading">
+        <i class="fa fa-refresh fa-spin loading-span"></i>
+    </div>
+    <div id="spin-loading" class="spin-loading" style="display: none;">
+        <div id="spin-js"></div>
+    </div>
+    <div class="wrapper">
+        @Html.Partial("_Header")
+        @Html.Partial("_Sidebar")
+
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    @ViewBag.Title
+                    <small>@ViewBag.Description</small>
+                </h1>
+            </section>
+
+            <section class="content" id="main-content">
+                @RenderBody()
+            </section>
+        </div>
+
+        @Html.Partial("_ControlSidebar")
+    </div>
+
+    <div class="modal fade" id="modal-popup" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button onclick="closeModal('modal-popup')" type="button" class="close" ><span aria-hidden="true">&times;</span></button>
+                    <div class="modal-title" id="modal-title" style="font-size: 20px"></div>
+                </div>
+                <div class="modal-body" id="modal-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-confirm-popup" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button onclick="closeModal('modal-confirm-popup')" type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                    <div class="modal-title" id="modal-confirm-title" style="font-size: 20px"></div>
+                </div>
+                <div class="modal-body">
+                    <p id="modal-confirm-content"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="btn-modal-confirm-no" data-dismiss="modal">Hayır</button>
+                    <button type="button" class="btn btn-primary" id="btn-modal-confirm-yes" data-dismiss="modal">Evet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-popup-lg" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button onclick="closeModal('modal-popup-lg')" type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                    <div class="modal-title" id="modal-title-lg" style="font-size: 20px"></div>
+                </div>
+                <div class="modal-body" id="modal-body-lg"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-popup-sm" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button onclick="closeModal('modal-popup-sm')" type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                    <div class="modal-title" id="modal-title-sm" style="font-size: 20px"></div>
+                </div>
+                <div class="modal-body" id="modal-body-sm"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="@RouteJs.RouteJsHandler.HandlerUrl"></script>
+    <script src="@EnumHandler.HandlerUrl"></script>
+    @Scripts.Render("~/Bundles/js")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

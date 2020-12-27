@@ -1,0 +1,45 @@
+﻿.loading-div {
+    position: absolute;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    background-color: #a3ddff3b;
+    display: none;
+}
+
+.loading-span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.input-group-padding {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+.div-blur {
+    filter: blur(1px);
+    background-color: #00000005;
+}
+
+.th-process {
+    width: 72px !important;
+}
+
+.menu-item{
+    cursor: pointer;
+}
+
+.modal-button {
+    float: right;
+    padding-right: 25px;
+}
+
+.spin-loading {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 9999;
+    background-color: #00000042;
+}

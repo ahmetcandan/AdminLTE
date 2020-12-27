@@ -1,0 +1,36 @@
+﻿@model IEnumerable<AdminLTE.Models.TranslationWordView>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<table class="table table-sm table-bordered table-hover">
+    <thead>
+        <tr>
+            <th translate="description">
+            </th>
+            <th translate="code">
+            </th>
+            <th class="th-process"></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Code)
+                </td>
+                <td>
+                    <div onclick="editForm(this)" url="@Url.Action("Edit", "TranslationWords", new { id = item.TranslationWordId })" class="btn btn-default btn-sm glyphicon glyphicon-edit"></div>
+                    <div onclick="deleteForm(this)" url="@Url.Action("Delete", "TranslationWords", new { id = item.TranslationWordId })" class="btn btn-default btn-sm glyphicon glyphicon-trash"></div>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

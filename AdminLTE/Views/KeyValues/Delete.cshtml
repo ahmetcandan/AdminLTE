@@ -1,0 +1,70 @@
+﻿@model AdminLTE.Models.KeyValueView
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="form-horizontal">
+    <dl class="dl-horizontal">
+        <dt translate="key">
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Key)
+        </dd>
+
+        <dt translate="value">
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Value)
+        </dd>
+
+        <dt translate="description">
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt translate="start-date">
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt translate="end-date">
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt translate="is-active">
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt translate="description">
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KeyType.Description)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div class="modal-button">
+                <div class="btn btn-danger" onclick="postForm(this, refreshList)" translate="delete"></div>
+            </div>
+        </div>
+    }
+</div>

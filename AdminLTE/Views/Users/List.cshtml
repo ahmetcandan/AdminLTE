@@ -1,0 +1,35 @@
+﻿@model IEnumerable<AdminLTE.Models.UserView>
+@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th translate="user-name">
+            </th>
+            <th translate="email">
+            </th>
+            <th class="th-process"></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <div onclick="editForm(this)" url="@Url.Action("Edit", new { id = item.Id })" class="btn btn-default btn-sm glyphicon glyphicon-edit"></div>
+                <div onclick="deleteForm(this)" url="@Url.Action("Delete", new { id = item.Id })" class="btn btn-default btn-sm glyphicon glyphicon-trash"></div>
+            </td>
+        </tr>
+    }
+
+</table>

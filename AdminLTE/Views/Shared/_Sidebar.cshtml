@@ -1,0 +1,46 @@
+﻿@using WebHelpers.Mvc5
+<aside class="main-sidebar">
+    <section class="sidebar">
+        @* BEGIN Search *@
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+        @* END Search *@
+        @* BEGIN Menu *@
+        <ul class="sidebar-menu" data-widget="tree" id="left-menu">
+            <li class="@Url.IsLinkActive("Index", "Home")">
+                <a href="@Url.Action("Index", "Home")" controller="Home"><i class="fa fa-home"></i> <span translate="home"></span></a>
+            </li>
+            <li class="@Url.IsLinkActive("Index", "KeyTypes")">
+                <a url="@Url.Action("Index", "KeyTypes")" controller="KeyTypes" class="menu-item" onclick="menuClick(this)"><i class="fa fa-database"></i> <span translate="key-types"></span></a>
+            </li>
+            <li class='treeview'>
+                <a href="#" controller="Settings">
+                    <i class="fa fa-link"></i> <span translate="settings"></span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu" style='display: @((Url.IsLinkActive("Index", "PackageStatus") == "active" || Url.IsLinkActive("Index", "TranslationLanguages") == "active" || Url.IsLinkActive("Index", "Users") == "active" || Url.IsLinkActive("Index", "Roles") == "active") ? "block" : "none")'>
+                    <li class="@Url.IsLinkActive("Index", "TranslationLanguages")">
+                        <a url="@Url.Action("Index", "TranslationLanguages")" controller="TranslationLanguages" class="menu-item" onclick="menuClick(this)"><i class="fa fa-language"></i> <span translate="translate-languages"></span></a>
+                    </li>
+                    <li class="@Url.IsLinkActive("Index", "Users")">
+                        <a url="@Url.Action("Index", "Users")" controller="Users" class="menu-item" onclick="menuClick(this)"><i class="fa fa-user"></i> <span translate="users"></span></a>
+                    </li>
+                    <li class="@Url.IsLinkActive("Index", "Roles")">
+                        <a url="@Url.Action("Index", "Roles")" controller="Roles" class="menu-item" onclick="menuClick(this)"><i class="fa fa-asterisk"></i> <span translate="roles"></span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        @* END Menu *@
+    </section>
+</aside>

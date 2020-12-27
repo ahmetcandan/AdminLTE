@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AdminLTE.Models.KeyValueView>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th translate="key">
+            </th>
+            <th translate="value">
+            </th>
+            <th translate="description">
+            </th>
+            <th translate="start-date">
+            </th>
+            <th translate="end-date">
+            </th>
+            <th class="th-process"></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Key)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                <div onclick="editForm(this)" url="@Url.Action("Edit", new { id = item.KeyValueId })" class="btn btn-default btn-sm glyphicon glyphicon-edit"></div>
+                <div onclick="deleteForm(this)" url="@Url.Action("Delete", new { id = item.KeyValueId })" class="btn btn-default btn-sm glyphicon glyphicon-trash"></div>
+            </td>
+        </tr>
+    }
+</table>

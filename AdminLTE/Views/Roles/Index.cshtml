@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Roller";
+}
+
+<div class="col-xs-12 col-md-12">
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <div onclick="newForm(this)" url="@Url.Action("Create")" class="btn btn-default btn-sm fa fa-plus"></div>
+            <div onclick="refreshList(this)" class="btn btn-default btn-sm fa fa-refresh"></div>
+            <div class="box-tools pull-right">
+
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group" id="list" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function refreshList(e) {
+        if (e)
+            e.disabled = true;
+        renderHtml('@Url.Action("List", "Roles")', "", "list", function () {
+            if (e)
+                e.disabled = false;
+        });
+    }
+
+    refreshList();
+</script>

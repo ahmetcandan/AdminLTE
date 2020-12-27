@@ -1,0 +1,99 @@
+﻿@model AdminLTE.Models.KeyTypeView
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.KeyTypeId)
+
+    <div class="form-group">
+        <label class="control-label col-md-2" translate="description"></label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2" translate="code"></label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-md-12">
+        <div class="">
+            <div class="box-header with-border">
+                <div onclick="newForm(this)" url="@Url.Action("Create", "KeyValues", new { keyTypeId = Model.KeyTypeId })" class="btn btn-default btn-sm fa fa-plus"></div>
+                <div onclick="refreshListValues(this)" url="@Url.Action("List", "KeyValues", new { id = Model.Code })" id="btn-words-refresh" class="btn btn-default btn-sm fa fa-refresh"></div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group" id="list-keys">
+                            <table class="table table-sm table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th translate="key">
+                                        </th>
+                                        <th translate="value">
+                                        </th>
+                                        <th translate="description">
+                                        </th>
+                                        <th translate="start-date">
+                                        </th>
+                                        <th translate="end-date">
+                                        </th>
+                                        <th class="th-process"></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var item in Model.KeyValues)
+                                    {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Key)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Value)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Description)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.StartDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EndDate)
+                                        </td>
+                                        <td>
+                                            <div onclick="editForm(this)" url="@Url.Action("Edit", "TranslationWords", new { id = item.KeyValueId })" class="btn btn-default btn-sm glyphicon glyphicon-edit"></div>
+                                            <div onclick="deleteForm(this)" url="@Url.Action("Delete", "TranslationWords", new { id = item.KeyValueId })" class="btn btn-default btn-sm glyphicon glyphicon-trash"></div>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="modal-button">
+            <div class="btn btn-primary" onclick="postForm(this, refreshList)" translate="save"></div>
+        </div>
+    </div>
+</div>
+}
