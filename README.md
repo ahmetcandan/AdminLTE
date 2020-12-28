@@ -1,8 +1,14 @@
 # AdminLTE
 
--User/Role management
--MultiLanguage
+<ul>
+  <li>User/Role management</li>
+  <li>MultiLanguage</li>
+</ul>
 
-<<Users>>
-admin / Admin123!
-user / User123!
+<div>
+<b>Users</b>
+<ul>
+  <li>admin / Admin123!</li>
+  <li>user / User123!</li>
+</ul>
+</div>
