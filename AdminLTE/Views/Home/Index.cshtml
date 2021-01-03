@@ -7,7 +7,7 @@
     <div class="col-xs-12 col-md-12">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h3 class="box-title">LSN</h3>
+                <h3 class="box-title">Admin</h3>LTE
 
                 <div class="box-tools pull-right">
 
@@ -24,5 +24,32 @@
 @section Scripts {
     <script>
         loadTranslate();
+
+        if (User.UserName === undefined && localStorage.User) {
+            const _user = JSON.parse(localStorage.User);
+            User.UserName = _user.UserName;
+            User.Email = _user.Email;
+            User.Roles = _user.Roles;
+        }
+
+        const lis = $('#left-menu li');
+        for (let i = 0; i < lis.length; i++) {
+            const page = pageController[$(lis[i].children[0]).attr('controller')];
+            if (page && page.roles) {
+                if (anyRoles(User.Roles, page.roles.split(',')))
+                    $(lis[i]).show();
+                else
+                    $(lis[i]).hide();
+            }
+
+            if (window.location.hash.length > 3 && $(lis[i].children[0]).attr('controller') === window.location.hash.substring(2)) {
+                $(lis[i]).attr('class', ($(lis[i]).attr('class') + ' active').trim());
+            }
+
+            if (!(window.location.hash.length > 3 && window.location.hash.startsWith('#')))
+                $('#li-home-menu').attr('class', 'active');
+            else
+                $('#li-home-menu').attr('class', '');
+        }
     </script>
 }

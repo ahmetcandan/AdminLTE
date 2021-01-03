@@ -1,7 +1,7 @@
 ﻿using System.Web.Optimization;
 using WebHelpers.Mvc5;
 
-namespace AdminLTE 
+namespace AdminLTE
 {
     public class BundleConfig
     {
@@ -22,6 +22,8 @@ namespace AdminLTE
 
             bundles.Add(new ScriptBundle("~/Bundles/js")
                 .Include("~/Content/js/plugins/jquery/jquery-3.3.1.js")
+                .Include("~/Content/js/plugins/jquery/jquery.signalR-2.4.1.js")
+                .Include("~/SignalR/Hubs")
                 .Include("~/Content/js/plugins/bootstrap/bootstrap.js")
                 .Include("~/Content/js/plugins/datatable/jquery.dataTables.js")
                 .Include("~/Content/js/plugins/datatable/dataTables.bootstrap.js")

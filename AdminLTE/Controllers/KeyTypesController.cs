@@ -7,13 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AdminLTE.Models;
+using Microsoft.AspNet.SignalR;
 
 namespace AdminLTE.Controllers
 {
-    [Authorize(Roles = "Admin,User")]
-    public class KeyTypesController : Controller
+    [System.Web.Mvc.Authorize(Roles = "Admin,User")]
+    public class KeyTypesController : BaseController
     {
-        private Models.DbModelContext db = new Models.DbModelContext();
+        private DbModelContext db = new DbModelContext();
 
         public ActionResult Index()
         {
@@ -154,5 +155,6 @@ namespace AdminLTE.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

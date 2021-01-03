@@ -11,7 +11,7 @@ using AdminLTE.Models;
 namespace AdminLTE.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class TranslationLanguagesController : Controller
+    public class TranslationLanguagesController : BaseController
     {
         private Models.DbModelContext db = new Models.DbModelContext();
 

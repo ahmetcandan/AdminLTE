@@ -39,8 +39,8 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                <div onclick="editForm(this)" url="@Url.Action("Edit", new { id = item.KeyValueId })" class="btn btn-default btn-sm glyphicon glyphicon-edit"></div>
-                <div onclick="deleteForm(this)" url="@Url.Action("Delete", new { id = item.KeyValueId })" class="btn btn-default btn-sm glyphicon glyphicon-trash"></div>
+                <div onclick="editForm(this)" url="@Url.Action("Edit" ,"KeyValues" , new { id = item.KeyValueId })" class="btn btn-default btn-sm glyphicon glyphicon-edit"></div>
+                <div onclick="deleteForm(this)" url="@Url.Action("Delete", "KeyValues", new { id = item.KeyValueId })" class="btn btn-default btn-sm glyphicon glyphicon-trash"></div>
             </td>
         </tr>
     }

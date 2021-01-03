@@ -15,7 +15,7 @@
         @* END Search *@
         @* BEGIN Menu *@
         <ul class="sidebar-menu" data-widget="tree" id="left-menu">
-            <li class="@Url.IsLinkActive("Index", "Home")">
+            <li class="@Url.IsLinkActive("Index", "Home")" id="li-home-menu">
                 <a href="@Url.Action("Index", "Home")" controller="Home"><i class="fa fa-home"></i> <span translate="home"></span></a>
             </li>
             <li class="@Url.IsLinkActive("Index", "KeyTypes")">

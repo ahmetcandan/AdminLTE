@@ -2,7 +2,7 @@
 
 namespace AdminLTE.Controllers
 {
-    public class ErrorController : Controller
+    public class ErrorController : BaseController
     {
         [HttpGet]
         public ActionResult InternalServerError()

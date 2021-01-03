@@ -13,9 +13,9 @@ using AdminLTE.Models;
 namespace AdminLTE.Controllers
 {
     [Authorize(Roles = "Admin,User")]
-    public class KeyValuesController : Controller
+    public class KeyValuesController : BaseController
     {
-        private Models.DbModelContext db = new Models.DbModelContext();
+        private DbModelContext db = new DbModelContext();
 
         // GET: Index
         public ActionResult Index()
@@ -24,9 +24,10 @@ namespace AdminLTE.Controllers
         }
 
         // GET: KeyValues
-        public ActionResult List()
+        public ActionResult List(int keyTypeId)
         {
             var keyValues = (from c in db.KeyValues
+                             where c.KeyTypeId == keyTypeId
                              select new KeyValueView
                              {
                                  Description = c.Description,
@@ -61,7 +62,7 @@ namespace AdminLTE.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "KeyValueId,KeyTypeId,Key,Value,Description,StartDate,EndDate,CreatedDate,CreatedUser,ModifiedDate,ModifiedUser,IsActive,IsDeleted")] KeyValueView instance)
+        public ActionResult Create([Bind(Include = "KeyValueId,KeyTypeId,Key,Value,Description,StartDate,EndDate")] KeyValueView instance)
         {
             if (ModelState.IsValid)
             {
@@ -121,7 +122,7 @@ namespace AdminLTE.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "KeyValueId,KeyTypeId,Key,Value,Description,StartDate,EndDate,CreatedDate,CreatedUser,ModifiedDate,ModifiedUser,IsActive,IsDeleted")] KeyValue instance)
+        public ActionResult Edit([Bind(Include = "KeyValueId,KeyTypeId,Key,Value,Description,StartDate,EndDate,IsActive")] KeyValueView instance)
         {
             if (ModelState.IsValid)
             {

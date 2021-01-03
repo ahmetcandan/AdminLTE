@@ -84,6 +84,7 @@ namespace AdminLTE
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+            app.MapSignalR();
         }
     }
 }

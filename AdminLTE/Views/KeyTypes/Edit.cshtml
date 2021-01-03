@@ -32,7 +32,7 @@
         <div class="">
             <div class="box-header with-border">
                 <div onclick="newForm(this)" url="@Url.Action("Create", "KeyValues", new { keyTypeId = Model.KeyTypeId })" class="btn btn-default btn-sm fa fa-plus"></div>
-                <div onclick="refreshListValues(this)" url="@Url.Action("List", "KeyValues", new { id = Model.Code })" id="btn-words-refresh" class="btn btn-default btn-sm fa fa-refresh"></div>
+                <div onclick="refreshListValues(this)" url="@Url.Action("List", "KeyValues", new { keyTypeId = Model.KeyTypeId })" id="btn-values-refresh" class="btn btn-default btn-sm fa fa-refresh"></div>
             </div>
             <div class="box-body">
                 <div class="row">
@@ -75,8 +75,8 @@
                                             @Html.DisplayFor(modelItem => item.EndDate)
                                         </td>
                                         <td>
-                                            <div onclick="editForm(this)" url="@Url.Action("Edit", "TranslationWords", new { id = item.KeyValueId })" class="btn btn-default btn-sm glyphicon glyphicon-edit"></div>
-                                            <div onclick="deleteForm(this)" url="@Url.Action("Delete", "TranslationWords", new { id = item.KeyValueId })" class="btn btn-default btn-sm glyphicon glyphicon-trash"></div>
+                                            <div onclick="editForm(this)" url="@Url.Action("Edit", "KeyValues", new { id = item.KeyValueId })" class="btn btn-default btn-sm glyphicon glyphicon-edit"></div>
+                                            <div onclick="deleteForm(this)" url="@Url.Action("Delete", "KeyValues", new { id = item.KeyValueId })" class="btn btn-default btn-sm glyphicon glyphicon-trash"></div>
                                         </td>
                                     </tr>
                                     }

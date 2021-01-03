@@ -9,7 +9,7 @@ using System.Web.Mvc;
 namespace AdminLTE.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class RolesController : Controller
+    public class RolesController : BaseController
     {
         private DbModelContext db = new DbModelContext();
 

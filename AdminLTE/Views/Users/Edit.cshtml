@@ -8,52 +8,99 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <div class="form-group">
-        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2", @translate = "user-name" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2", @translate = "email" })
+            <div class="col-md-10">
 
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    @Html.HiddenFor(model => model.Id)
-    @Html.HiddenFor(model => model.RoleNames)
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.RoleNames)
 
-    <div class="form-group">
-        <label class="control-label col-md-2" translate="roles"></label>
-        <div class="col-md-10">
-            <div class="form-control" style="border: 0px; padding: 0px;">
-                <select class="selectpicker" multiple id="Roles" name="Roles">
-                    @{ foreach (var item in ViewBag.Roles)
-                        {
-                            <option>@item</option>
+        <div class="form-group">
+            <label class="control-label col-md-2" translate="roles"></label>
+            <div class="col-md-10">
+                <div class="form-control" style="border: 0px; padding: 0px;">
+                    <select class="selectpicker" multiple id="Roles" name="Roles">
+                        @{ foreach (var item in ViewBag.Roles)
+                            {
+                                <option>@item</option>
+                            }
                         }
-                    }
-                </select>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div style="padding-left: 15px; display: @(Model.UserName == User.Identity.Name ? "none" : "block")">
+                <div class="btn btn-default fa fa-bell" onclick="openMessagePopup('@Model.UserName')"></div>
+                <div class="btn btn-default fa fa-sign-out" onclick="logoutUser(this)" user="@Model.UserName"></div>
+            </div>
+            <div class="modal-button">
+                <div class="btn btn-primary" onclick="editUser(this, refreshList)" translate="save"></div>
             </div>
         </div>
     </div>
-
-    <div class="form-group">
-        <div class="modal-button">
-            <div class="btn btn-primary" onclick="editUser(this, refreshList)" translate="save"></div>
-        </div>
-    </div>
-</div>
 }
 
 <script>
     $('#Roles').selectpicker('val', $('#RoleNames').val().split(','));
+
+    function openMessagePopup(userName) {
+        openModal('modal-popup-sendmessage');
+        $('#sendUser').val(userName);
+        $('#messageType').selectpicker('val', 'notification');
+        $('#iconType').selectpicker('val', 'info');
+    }
+
+    function messageType_change() {
+        const messageType = $('#messageType').val();
+        const iconGroupPanel = $('#icon-group-panel');
+        if (messageType === 'notification')
+            iconGroupPanel.show();
+        else
+            iconGroupPanel.hide();
+    }
+
+    function logoutUser(e) {
+        const user = $(e).attr('user');
+        $.connection.signalRHub.server.logoffUser(user);
+    }
+
+    function sendMessage() {
+        const messageType = $('#messageType').val();
+        const message = $('#message').val();
+        const user = $('#sendUser').val();
+        const iconType = $('#iconType').val();
+        if (message === null || message === undefined || message.length === 0) {
+            $.toast({
+                heading: translate('message-cannot-be-blank'),
+                icon: 'error',
+                position: {
+                    right: 1,
+                    top: 51
+                }
+            });
+            return;
+        }
+        if (messageType === 'notification')
+            $.connection.signalRHub.server.sendNotification(user, message, iconType);
+        else if (messageType === 'message')
+            $.connection.signalRHub.server.sendMessage(user, message);
+    }
 </script>

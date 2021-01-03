@@ -10,7 +10,7 @@
         {
             @ViewBag.Title@: -
         }
-        LSN
+        AdminLTE
     </title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -51,7 +51,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button onclick="closeModal('modal-popup')" type="button" class="close" ><span aria-hidden="true">&times;</span></button>
+                    <button onclick="closeModal('modal-popup')" type="button" class="close"><span aria-hidden="true">&times;</span></button>
                     <div class="modal-title" id="modal-title" style="font-size: 20px"></div>
                 </div>
                 <div class="modal-body" id="modal-body"></div>
@@ -101,9 +101,114 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modal-popup-message" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button onclick="closeModal('modal-popup-message')" type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                    <div class="modal-title" id="modal-title-message" style="font-size: 20px"></div>
+                </div>
+                <div class="modal-body" id="modal-body-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-popup-sendmessage" data-backdrop="static">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button onclick="closeModal('modal-popup-sendmessage')" type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                    <div class="modal-title" style="font-size: 20px" translate="user-message-notification"></div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <input class="form-control text-box single-line" id="sendUser" value="" type="text" style="display: none;">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" translate="type"></label>
+                            <div class="col-md-10">
+                                <select class="selectpicker" id="messageType" onchange="messageType_change()">
+                                    <option value="notification" translate="notification"></option>
+                                    <option value="message" translate="message"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" translate="message"></label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" id="message" type="text">
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="icon-group-panel">
+                            <label class="control-label col-md-2" translate="icon"></label>
+                            <div class="col-md-10">
+                                <select class="selectpicker" id="iconType" name="iconType">
+                                    <option value="success" translate="success"></option>
+                                    <option value="info" translate="info"></option>
+                                    <option value="warning" translate="warning"></option>
+                                    <option value="error" translate="error"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="height: 20px;">
+                            <div class="modal-button">
+                                <div class="btn btn-primary" onclick="sendMessage()" translate="send"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="@RouteJs.RouteJsHandler.HandlerUrl"></script>
     <script src="@EnumHandler.HandlerUrl"></script>
     @Scripts.Render("~/Bundles/js")
+    <script src="~/signalr/hubs" type="text/javascript"></script>
     @RenderSection("scripts", required: false)
+    <script>
+        $(function () {
+            var chat = $.connection.signalRHub;
+            chat.client.pushNotification = function (userName, message, icon) {
+                $.toast({
+                    heading: htmlEncode(message),
+                    icon: icon,
+                    position: {
+                        right: 1,
+                        top: 51
+                    }
+                });
+            };
+            chat.client.pushMessage = function (userName, message) {
+                openFormMessage(userName, message);
+            };
+            chat.client.logOff = function () {
+                $.toast({
+                    heading: translate('logging-out'),
+                    icon: 'info',
+                    position: {
+                        right: 1,
+                        top: 51
+                    }
+                });
+                setTimeout(function () {
+                    logoff();
+                }, 3000);
+            };
+
+            if (localStorage.User) {
+                $.connection.hub.start().done(function () {
+                });
+            }
+        });
+
+        function htmlEncode(value) {
+            var encodedValue = $('<div />').text(value).html();
+            return encodedValue;
+        }
+    </script>
 </body>
 </html>

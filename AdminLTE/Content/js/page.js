@@ -42,7 +42,7 @@
     KeyValues:
     {
         name: 'KeyValues',
-        roles: 'Admin,User',
+        roles: 'User,Admin',
         default: 'Index',
         edit: 'Edit',
         create: 'Create',
@@ -51,7 +51,7 @@
     KeyTypes:
     {
         name: 'KeyTypes',
-        roles: 'Admin,User',
+        roles: 'User,Admin',
         default: 'Index',
         edit: 'Edit',
         create: 'Create',
@@ -77,22 +77,43 @@ const User = {
 }
 
 function menuClick(e) {
-    const url = $(e).attr('url')
+    menuDeActived();
+    if (User.UserName === undefined && localStorage.User) {
+        const _user = JSON.parse(localStorage.User);
+        User.UserName = _user.UserName;
+        User.Email = _user.Email;
+        User.Roles = _user.Roles;
+    }
+
+    const url = $(e).attr('url');
     if (pageController.RenderUrl !== url) {
         startLoading();
         pageController.CurrentControllerName = $(e).attr('controller');
         pageController.RenderUrl = url;
         window.location.hash = pageController.RenderUrl;
-        menuDeActived();
         const li = $(e).parent();
         $(li).attr('class', $(li).attr('class') + ' active');
         pageRender(stopLoading);
+    }
+    const lis = $('#left-menu li');
+    for (let i = 0; i < lis.length; i++) {
+        const page = pageController[$(lis[i].children[0]).attr('controller')];
+        if (page && page.roles) {
+            if (anyRoles(User.Roles, page.roles.split(',')))
+                $(lis[i]).show();
+            else
+                $(lis[i]).hide();
+        }
+
+        if (window.location.hash.length > 2 && $(lis[i].children[0]).attr('controller') === window.location.hash.substring(2)) {
+            $(lis[i]).attr('class', ($(lis[i]).attr('class') + ' active').trim());
+        }
     }
 }
 
 function menuDeActived() {
     const lis = $('#left-menu li');
     for (let i = 0; i < lis.length; i++) {
-        $(lis[i]).attr('class', $(lis[i]).attr('class').replace('active', ''));
+        $(lis[i]).attr('class', $(lis[i]).attr('class').replaceAll('active', ''));
     }
 }

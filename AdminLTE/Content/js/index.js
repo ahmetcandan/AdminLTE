@@ -45,8 +45,7 @@ function deleteFormSmall(e) {
 
 function openForm(url, title) {
     startLoading();
-    renderHtml(url, title, 'modal-body', function ()
-    {
+    renderHtml(url, title, 'modal-body', function () {
         stopLoading();
         openModal('modal-popup');
     }, 'modal-title');
@@ -54,8 +53,7 @@ function openForm(url, title) {
 
 function openFormLarge(url, title) {
     startLoading();
-    renderHtml(url, title, 'modal-body-lg', function ()
-    {
+    renderHtml(url, title, 'modal-body-lg', function () {
         stopLoading();
         openModal('modal-popup-lg');
     }, 'modal-title-lg');
@@ -63,11 +61,16 @@ function openFormLarge(url, title) {
 
 function openFormSmall(url, title) {
     startLoading();
-    renderHtml(url, title, 'modal-body-sm', function ()
-    {
+    renderHtml(url, title, 'modal-body-sm', function () {
         stopLoading();
         openModal('modal-popup-sm');
     }, 'modal-title-sm');
+}
+
+function openFormMessage(title, message) {
+    openModal('modal-popup-message');
+    $('#modal-title-message').html(title);
+    $('#modal-body-message').html(message);
 }
 
 function renderHtml(url, title, htmlid = 'modal-body', success = undefined, titleid = 'modal-title') {
@@ -119,7 +122,7 @@ function openModal(id = 'modal-popup') {
     const maxZindex = getMaxPopupZindex();
     $('#' + id).modal();
     $('#' + id).css('z-index', (maxZindex + 1).toString());
-    
+
 }
 
 function modalConfirm(title, content, yes, no, cancel) {
@@ -203,7 +206,7 @@ function postForm(item, success) {
         const data = new FormData(item[0]);
         xHttp.send(data);
         const _success = function () {
-            if(success)
+            if (success)
                 success();
             $.toast({
                 heading: translate('transaction-successful'),
@@ -212,7 +215,7 @@ function postForm(item, success) {
                     right: 1,
                     top: 51
                 }
-            })
+            });
         }
         xHttp.onloadend = _success();
         //const _fail = function () {
@@ -242,6 +245,7 @@ function logoff() {
     var postUrl = $('#user-logoff').attr('post-url');
     var redirectUrl = $('#user-logoff').attr('redirect-url');
     $.post(postUrl, function (response) {
+        localStorage.removeItem('User');
         window.location.href = redirectUrl;
     });
 }

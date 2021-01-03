@@ -45,24 +45,10 @@ $(function () {
             User.Roles = _user.Roles;
         }
 
-        const lis = $('#left-menu li');
-        menuDeActived();
-        for (let i = 0; i < lis.length; i++) {
-            const page = pageController[$(lis[i].children[0]).attr('controller')];
-            if (page && page.roles) {
-                if (anyRoles(User.Roles, page.roles.split(',')))
-                    $(lis[i]).show();
-                else
-                    $(lis[i]).hide();
-            }
-
-            if (window.location.hash.length > 2 && $(lis[i].children[0]).attr('controller') === window.location.hash.substring(2)) {
-                $(lis[i]).attr('class', ($(lis[i]).attr('class') + ' active').trim());
-            }
-        }
-
         const urlHash = window.location.hash;
-        if (urlHash !== undefined && urlHash !== null && urlHash.startsWith('#')) {
+        if (window.location.hash === '#undefined')
+            window.location.hash = '';
+        if (urlHash !== undefined && urlHash !== null && urlHash !== '#undefined' && urlHash.startsWith('#')) {
             startLoading();
             pageController.RenderUrl = urlHash.substring(1);
             window.location.hash = pageController.RenderUrl;

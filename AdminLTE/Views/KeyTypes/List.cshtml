@@ -24,8 +24,8 @@
                 @Html.DisplayFor(modelItem => item.Code)
             </td>
             <td>
-                <div onclick="editFormLarge(this)" url="@Url.Action("Edit", new { id = item.KeyTypeId })" class="btn btn-default btn-sm glyphicon glyphicon-edit"></div>
-                <div onclick="deleteForm(this)" url="@Url.Action("Delete", new { id = item.KeyTypeId })" class="btn btn-default btn-sm glyphicon glyphicon-trash"></div>
+                <div onclick="editFormLarge(this)" url="@Url.Action("Edit", "KeyTypes", new { id = item.KeyTypeId })" class="btn btn-default btn-sm glyphicon glyphicon-edit"></div>
+                <div onclick="deleteForm(this)" url="@Url.Action("Delete", "KeyTypes", new { id = item.KeyTypeId })" class="btn btn-default btn-sm glyphicon glyphicon-trash"></div>
             </td>
         </tr>
     }
