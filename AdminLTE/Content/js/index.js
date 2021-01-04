@@ -96,7 +96,7 @@ function render(url, htmlid, success = undefined) {
                 if (xResponded.header !== undefined && xResponded.headers.location !== undefined)
                     window.location.href = xResponded.headers.location;
                 else
-                    window.location.href = window.location.origin + '/Account/Login?ReturnUrl=' + (window.location.hash.startsWith('#') ? window.location.hash.substring(1) : window.location.hash);
+                    window.location.href = window.location.origin + '/' + localStorage.language + '/Account/Login?ReturnUrl=' + (window.location.hash.startsWith('#') ? window.location.hash.substring(1) : window.location.hash);
             }
         }
         $('#' + htmlid).removeClass('div-blur');
@@ -197,7 +197,15 @@ function loginPostForm() {
             User.Roles = data.Roles;
             localStorage.removeItem('User');
             localStorage.setItem('User', JSON.stringify(User));
-            window.location.href = window.location.origin + '/#' + getUrlParameter('ReturnUrl');
+            let languageCode = localStorage.language;
+            if (window.location.pathname.split('/').length > 2)
+                languageCode = window.location.pathname.split('/')[1];
+            else if (localStorage.language)
+                languageCode = localStorage.language;
+            else
+                languageCode = 'tr';
+            localStorage.setItem('language', languageCode.toUpperCase());
+            window.location.href = window.location.origin + '/' + languageCode.toLowerCase() + '#' + getUrlParameter('ReturnUrl');
             loadTranslate();
         });
 
