@@ -54,6 +54,7 @@ namespace AdminLTE.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "TranslationWordId,TranslationLanguageId,Description,Code,IsDeleted")] TranslationWordView instance)
         {
+            ViewBag.TranslationLanguageId = new SelectList(db.TranslationLanguages, "TranslationLanguageId", "Description", instance.TranslationLanguageId);
             TranslationWord translationWord = null;
             if (ModelState.IsValid)
             {
@@ -69,7 +70,6 @@ namespace AdminLTE.Controllers
                 return PartialView(instance);
             }
 
-            ViewBag.TranslationLanguageId = new SelectList(db.TranslationLanguages, "TranslationLanguageId", "Description", translationWord.TranslationLanguageId);
             return PartialView(instance);
         }
 
@@ -103,6 +103,7 @@ namespace AdminLTE.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "TranslationWordId,TranslationLanguageId,Description,Code,IsDeleted")] TranslationWordView instance)
         {
+            ViewBag.TranslationLanguageId = new SelectList(db.TranslationLanguages, "TranslationLanguageId", "Description", instance.TranslationLanguageId);
             TranslationWord translationWord = db.TranslationWords.Find(instance.TranslationWordId);
             if (ModelState.IsValid)
             {
@@ -114,7 +115,6 @@ namespace AdminLTE.Controllers
                 db.SaveChanges();
                 return PartialView(instance);
             }
-            ViewBag.TranslationLanguageId = new SelectList(db.TranslationLanguages, "TranslationLanguageId", "Description", translationWord.TranslationLanguageId);
             return PartialView(instance);
         }
 

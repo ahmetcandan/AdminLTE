@@ -50,6 +50,7 @@ namespace AdminLTE.Controllers
         [HttpGet]
         public ActionResult Edit(string id)
         {
+            throw new UserException(Translate("user-not-found"));
             var role = db.Roles.Find(id);
             return PartialView(new RoleView
             {

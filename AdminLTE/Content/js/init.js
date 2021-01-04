@@ -26,12 +26,18 @@ $(function () {
                 $("#language-select").append(new Option(languages[i].Code, languages[i].Code));
             }
         }
+        let languageCode = '';
+        if (window.location.pathname.split('/').length > 1) {
+            languageCode = window.location.pathname.split('/')[1];
+        }
+        if (languageCode === null || languageCode === undefined || languageCode.length === 0) languageCode = 'TR'
+        localStorage.setItem('language', languageCode);
+        $($('[data-id=language-select]').children()[0].children[0].children[0]).html(languageCode.toUpperCase());
+        $('#language-select').val(languageCode.toUpperCase());
 
-        let languageCode = localStorage.getItem('language');
-        if (languageCode === null || languageCode === undefined || languageCode === 'null' || languageCode === 'undefined')
-            languageCode = 'TR';
-        $('#language-select').selectpicker('val', languageCode);
-        $('#language-select').parent().width('160px')
+
+        $('#language-select').parent().width('160px');
+        setTranslateWords();
 
         setTimeout(function () {
             $("body").layout("fix");
@@ -50,7 +56,10 @@ $(function () {
             window.location.hash = '';
         if (urlHash !== undefined && urlHash !== null && urlHash !== '#undefined' && urlHash.startsWith('#')) {
             startLoading();
-            pageController.RenderUrl = urlHash.substring(1);
+            if (urlHash.split('/').length > 2)
+                pageController.RenderUrl = '/' + urlHash.substring(urlHash.indexOf(urlHash.split('/')[2]));
+            else
+                pageController.RenderUrl = urlHash.substring(1);
             window.location.hash = pageController.RenderUrl;
             pageRender(stopLoading);
         }

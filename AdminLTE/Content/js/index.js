@@ -86,9 +86,18 @@ function pageRender(success = undefined) {
 }
 
 function render(url, htmlid, success = undefined) {
-    $.get(url, function (response) {
-        if (response === "") {
-            window.location.href = window.location.origin + '/Account/Login?ReturnUrl=' + (window.location.hash.startsWith('#') ? window.location.hash.substring(1) : window.location.hash);
+    if (url.split('/').length < 3)
+        url = '/' + localStorage.getItem('language') + url;
+    $.get(url, function (response, status, header) {
+        const xRespondedString = header.getResponseHeader('x-responded-json');
+        if (xRespondedString !== null) {
+            const xResponded = JSON.parse(xRespondedString);
+            if (xResponded.status === 401) {
+                if (xResponded.header !== undefined && xResponded.headers.location !== undefined)
+                    window.location.href = xResponded.headers.location;
+                else
+                    window.location.href = window.location.origin + '/Account/Login?ReturnUrl=' + (window.location.hash.startsWith('#') ? window.location.hash.substring(1) : window.location.hash);
+            }
         }
         $('#' + htmlid).removeClass('div-blur');
         $('#' + htmlid).html(response);
@@ -290,7 +299,7 @@ function translate(code) {
 function changeLanguage(e) {
     localStorage.removeItem('language');
     localStorage.setItem('language', e.value);
-    setTranslateWords();
+    window.location.pathname = '/' + e.value.toLowerCase();
 }
 
 TurkishCharacter = function (text) {

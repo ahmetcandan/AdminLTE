@@ -89,7 +89,10 @@ function menuClick(e) {
     if (pageController.RenderUrl !== url) {
         startLoading();
         pageController.CurrentControllerName = $(e).attr('controller');
-        pageController.RenderUrl = url;
+        if (url.split('/').length > 2)
+            pageController.RenderUrl = '/' + url.substring(url.indexOf(url.split('/')[2]));
+        else
+            pageController.RenderUrl = url;
         window.location.hash = pageController.RenderUrl;
         const li = $(e).parent();
         $(li).attr('class', $(li).attr('class') + ' active');

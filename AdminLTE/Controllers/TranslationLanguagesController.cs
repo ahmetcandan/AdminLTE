@@ -51,7 +51,7 @@ namespace AdminLTE.Controllers
             {
                 translationLanguage = new TranslationLanguage
                 {
-                    Code = instance.Code,
+                    Code = instance.Code.ToUpper(),
                     Description = instance.Description,
                     IsDeleted = false,
                     TranslationLanguageId = instance.TranslationLanguageId
@@ -104,7 +104,7 @@ namespace AdminLTE.Controllers
             {
                 translationLanguage.TranslationLanguageId = instance.TranslationLanguageId;
                 translationLanguage.Description = instance.Description;
-                translationLanguage.Code = instance.Code;
+                translationLanguage.Code = instance.Code.ToUpper();
                 db.Entry(translationLanguage).State = EntityState.Modified;
                 db.SaveChanges();
                 return PartialView(instance);

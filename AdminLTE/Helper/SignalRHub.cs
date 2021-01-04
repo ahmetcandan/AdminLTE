@@ -15,8 +15,8 @@ namespace AdminLTE
 
         public void SendNotification(string userName, string message, string icon)
         {
-            if (!Context.User.IsInRole("Admin"))
-                return;
+            //if (!Context.User.IsInRole("Admin"))
+            //    return;
 
             string name = Context.User.Identity.Name;
 
