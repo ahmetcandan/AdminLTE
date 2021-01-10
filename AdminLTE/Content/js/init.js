@@ -51,6 +51,11 @@ $(function () {
             User.Roles = _user.Roles;
         }
 
+        //if (localStorage.User && $.connection.hub.id == undefined) {
+        //    $.connection.hub.start().done(function () {
+        //    });
+        //}
+
         const urlHash = window.location.hash;
         if (window.location.hash === '#undefined')
             window.location.hash = '';

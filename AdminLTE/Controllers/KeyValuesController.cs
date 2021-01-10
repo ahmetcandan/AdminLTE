@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml;
+using AdminLTE.Model;
 using AdminLTE.Models;
 
 namespace AdminLTE.Controllers
@@ -26,7 +27,7 @@ namespace AdminLTE.Controllers
         // GET: KeyValues
         public ActionResult List(int keyTypeId)
         {
-            var keyValues = (from c in db.KeyValues
+            var keyValues = (from c in UnitOfWork.KeyValues.GetAll()
                              where c.KeyTypeId == keyTypeId
                              select new KeyValueView
                              {

@@ -1,9 +1,20 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminLTE", "AdminLTE\AdminLTE.csproj", "{883A5ACE-1931-4558-979A-59D57A388C4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminLTE.Repository", "AdminLTE.Repository\AdminLTE.Repository.csproj", "{39F99FAD-924F-4D18-9468-2EA1CF586178}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminLTE.Model", "AdminLTE.Model\AdminLTE.Model.csproj", "{9403B98B-51C2-49B2-81CD-2FADACAC2068}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminLTE.Interface", "AdminLTE.Interface\AdminLTE.Interface.csproj", "{178024D9-7335-493A-BEC8-EAB8F3D9B7B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminLTE.DataAccess", "AdminLTE.DataAccess\AdminLTE.DataAccess.csproj", "{7DB44149-0E97-4B1A-A5A1-AA0D28BD1DC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminLTE.Manager", "AdminLTE.Manager\AdminLTE.Manager.csproj", "{BEBD570B-B90F-4F67-B7D9-005389490BA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminLTE.Core", "AdminLTE.Core\AdminLTE.Core.csproj", "{28A21833-0714-47C0-983F-304D474B3B02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +26,30 @@ Global
 		{883A5ACE-1931-4558-979A-59D57A388C4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{883A5ACE-1931-4558-979A-59D57A388C4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{883A5ACE-1931-4558-979A-59D57A388C4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39F99FAD-924F-4D18-9468-2EA1CF586178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39F99FAD-924F-4D18-9468-2EA1CF586178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39F99FAD-924F-4D18-9468-2EA1CF586178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39F99FAD-924F-4D18-9468-2EA1CF586178}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9403B98B-51C2-49B2-81CD-2FADACAC2068}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9403B98B-51C2-49B2-81CD-2FADACAC2068}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9403B98B-51C2-49B2-81CD-2FADACAC2068}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9403B98B-51C2-49B2-81CD-2FADACAC2068}.Release|Any CPU.Build.0 = Release|Any CPU
+		{178024D9-7335-493A-BEC8-EAB8F3D9B7B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{178024D9-7335-493A-BEC8-EAB8F3D9B7B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{178024D9-7335-493A-BEC8-EAB8F3D9B7B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{178024D9-7335-493A-BEC8-EAB8F3D9B7B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DB44149-0E97-4B1A-A5A1-AA0D28BD1DC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DB44149-0E97-4B1A-A5A1-AA0D28BD1DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DB44149-0E97-4B1A-A5A1-AA0D28BD1DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DB44149-0E97-4B1A-A5A1-AA0D28BD1DC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEBD570B-B90F-4F67-B7D9-005389490BA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEBD570B-B90F-4F67-B7D9-005389490BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEBD570B-B90F-4F67-B7D9-005389490BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEBD570B-B90F-4F67-B7D9-005389490BA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28A21833-0714-47C0-983F-304D474B3B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28A21833-0714-47C0-983F-304D474B3B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28A21833-0714-47C0-983F-304D474B3B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28A21833-0714-47C0-983F-304D474B3B02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,13 +1,19 @@
-namespace AdminLTE.Models
+﻿using AdminLTE.Interface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AdminLTE.Model
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("TranslationWord")]
-    public partial class TranslationWord
+    public partial class TranslationWord : IEntity
     {
         public TranslationWord()
         {

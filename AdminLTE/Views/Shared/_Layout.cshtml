@@ -172,6 +172,7 @@
     <script>
         $(function () {
             var chat = $.connection.signalRHub;
+
             chat.client.pushNotification = function (userName, message, icon) {
                 $.toast({
                     heading: htmlEncode(message),
@@ -182,9 +183,24 @@
                     }
                 });
             };
+
             chat.client.pushMessage = function (userName, message) {
                 openFormMessage(userName, message);
             };
+
+            chat.client.clearTranslateCache = function() {
+                setTranslateWords();
+                loadTranslate();
+                $.toast({
+                    heading: translate('refresh-cache'),
+                    icon: 'info',
+                    position: {
+                        right: 1,
+                        top: 51
+                    }
+                })
+            };
+
             chat.client.logOff = function () {
                 $.toast({
                     heading: translate('logging-out'),
@@ -198,11 +214,6 @@
                     logoff();
                 }, 3000);
             };
-
-            if (localStorage.User) {
-                $.connection.hub.start().done(function () {
-                });
-            }
         });
 
         function htmlEncode(value) {

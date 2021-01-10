@@ -7,12 +7,14 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Filters;
 using System.Web.Routing;
+using AdminLTE.Manager;
 
 namespace AdminLTE.Controllers
 {
     public class BaseController : Controller
     {
         private DbModelContext db = new DbModelContext();
+        protected UnitOfWork UnitOfWork = new UnitOfWork(new DbModelContext());
 
         private readonly static Dictionary<string, string> _translate = new Dictionary<string, string>();
         private static string _languageCode = "";

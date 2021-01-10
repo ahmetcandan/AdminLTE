@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.SignalR;
+using System.Web.Caching;
 
 namespace AdminLTE
 {
@@ -15,8 +16,8 @@ namespace AdminLTE
 
         public void SendNotification(string userName, string message, string icon)
         {
-            //if (!Context.User.IsInRole("Admin"))
-            //    return;
+            if (!Context.User.IsInRole("Admin"))
+                return;
 
             string name = Context.User.Identity.Name;
 
@@ -55,6 +56,14 @@ namespace AdminLTE
             Clients.All.pushMessage(message);
         }
 
+        public void SendClearTranslateCache()
+        {
+            if (!Context.User.IsInRole("Admin"))
+                return;
+
+            Clients.All.clearTranslateCache();
+        }
+
         public void LogoffUser(string userName)
         {
             if (!Context.User.IsInRole("Admin"))
@@ -68,29 +77,51 @@ namespace AdminLTE
 
         public override Task OnConnected()
         {
-            string name = Context.User.Identity.Name;
+            try
+            {
+                string name = Context.User.Identity.Name;
 
-            _connections.Add(name, Context.ConnectionId);
+                _connections.Add(name, Context.ConnectionId);
+            }
+            catch (Exception)
+            {
+
+            }
 
             return base.OnConnected();
         }
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            string name = Context.User.Identity.Name;
+            try
+            {
+                string name = Context.User.Identity.Name;
 
-            _connections.Remove(name, Context.ConnectionId);
+                _connections.Remove(name, Context.ConnectionId);
+            }
+            catch (Exception)
+            {
+
+            }
+
 
             return base.OnDisconnected(stopCalled);
         }
 
         public override Task OnReconnected()
         {
-            string name = Context.User.Identity.Name;
-
-            if (!_connections.GetConnections(name).Contains(Context.ConnectionId))
+            try
             {
-                _connections.Add(name, Context.ConnectionId);
+                string name = Context.User.Identity.Name;
+
+                if (!_connections.GetConnections(name).Contains(Context.ConnectionId))
+                {
+                    _connections.Add(name, Context.ConnectionId);
+                }
+            }
+            catch (Exception)
+            {
+
             }
 
             return base.OnReconnected();

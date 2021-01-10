@@ -44,16 +44,7 @@
     }
 
     function clearCache() {
-        setTranslateWords();
-        loadTranslate();
-        $.toast({
-            heading: translate('refresh-cache'),
-            icon: 'info',
-            position: {
-                right: 1,
-                top: 51
-            }
-        })
+        $.connection.signalRHub.server.sendClearTranslateCache();
     }
 
     refreshList();

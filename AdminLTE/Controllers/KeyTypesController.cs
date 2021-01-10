@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AdminLTE.Model;
 using AdminLTE.Models;
 using Microsoft.AspNet.SignalR;
 
@@ -24,7 +25,7 @@ namespace AdminLTE.Controllers
         // GET: KeyTypes
         public ActionResult List()
         {
-            var result = (from c in db.KeyTypes
+            var result = (from c in UnitOfWork.KeyTypes.GetAll()
                           select new KeyTypeView
                           {
                               Code = c.Code,

@@ -263,6 +263,7 @@ function logoff() {
     var redirectUrl = $('#user-logoff').attr('redirect-url');
     $.post(postUrl, function (response) {
         localStorage.removeItem('User');
+        $.connection.hub.stop();
         window.location.href = redirectUrl;
     });
 }

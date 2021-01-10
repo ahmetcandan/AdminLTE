@@ -331,13 +331,9 @@
     <Compile Include="Models\AccountApiBindingModels.cs" />
     <Compile Include="Models\AccountApiViewModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\TranslationWord.cs" />
-    <Compile Include="Models\TranslationLanguage.cs" />
     <Compile Include="Models\ViewModels\KeyTypeView.cs" />
     <Compile Include="Models\ViewModels\KeyValueView.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\KeyType.cs" />
-    <Compile Include="Models\KeyValue.cs" />
     <Compile Include="Models\DbContext.cs" />
     <Compile Include="Models\ViewModels\TranslationLanguageView.cs" />
     <Compile Include="Models\ViewModels\TranslationWordView.cs" />
@@ -485,6 +481,24 @@
     <EmbeddedResource Include="Migrations\202012271607511_FirstMigration.resx">
       <DependentUpon>202012271607511_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AdminLTE.Core\AdminLTE.Core.csproj">
+      <Project>{28a21833-0714-47c0-983f-304d474b3b02}</Project>
+      <Name>AdminLTE.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AdminLTE.Interface\AdminLTE.Interface.csproj">
+      <Project>{178024d9-7335-493a-bec8-eab8f3d9b7b3}</Project>
+      <Name>AdminLTE.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AdminLTE.Manager\AdminLTE.Manager.csproj">
+      <Project>{bebd570b-b90f-4f67-b7d9-005389490ba5}</Project>
+      <Name>AdminLTE.Manager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AdminLTE.Model\AdminLTE.Model.csproj">
+      <Project>{9403b98b-51c2-49b2-81cd-2fadacac2068}</Project>
+      <Name>AdminLTE.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
