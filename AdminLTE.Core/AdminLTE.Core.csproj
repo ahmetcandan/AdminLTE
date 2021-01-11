@@ -43,6 +43,9 @@
   <ItemGroup>
     <Compile Include="IKeyTypeRepository.cs" />
     <Compile Include="IKeyValueRepository.cs" />
+    <Compile Include="IKeyManager.cs" />
+    <Compile Include="ITranslationManager.cs" />
+    <Compile Include="ITranslationWordRepository.cs" />
     <Compile Include="ITranslationLanguageRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -12,28 +12,26 @@ namespace AdminLTE.Manager
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly DbContext _context;
+        private readonly DbContext context;
 
         public UnitOfWork(DbContext context)
         {
-            _context = context;
-            TranslationLanguages = new TranslateLanguageRepository(_context);
-            KeyValues = new KeyValueRepository(_context);
-            KeyTypes = new KeyTypeRepository(_context);
+            this.context = context;
+            TranslationManager = new TranslationManager(this.context);
+            KeyManager = new KeyManager(this.context);
         }
 
-        public ITranslationLanguageRepository TranslationLanguages { get; private set; }
-        public IKeyValueRepository KeyValues { get; private set; }
-        public IKeyTypeRepository KeyTypes { get; private set; }
+        public ITranslationManager TranslationManager { get; private set; }
+        public IKeyManager KeyManager { get; private set; }
 
         public int Complate()
         {
-            return _context.SaveChanges();
+            return context.SaveChanges();
         }
 
         public void Dispose()
         {
-            _context.Dispose();
+            context.Dispose();
         }
     }
 }

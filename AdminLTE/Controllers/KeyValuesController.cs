@@ -27,8 +27,7 @@ namespace AdminLTE.Controllers
         // GET: KeyValues
         public ActionResult List(int keyTypeId)
         {
-            var keyValues = (from c in UnitOfWork.KeyValues.GetAll()
-                             where c.KeyTypeId == keyTypeId
+            var keyValues = (from c in UnitOfWork.KeyManager.GetKeyValues(keyTypeId)
                              select new KeyValueView
                              {
                                  Description = c.Description,

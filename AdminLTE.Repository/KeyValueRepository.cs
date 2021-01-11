@@ -14,5 +14,10 @@ namespace AdminLTE.Repository
         public KeyValueRepository(DbContext context) : base(context)
         {
         }
+
+        public IQueryable<KeyValue> GetKeyValuesForKeyTypeId(int keyTypeId)
+        {
+            return Context.Set<KeyValue>().Where(c => c.KeyTypeId == keyTypeId);
+        }
     }
 }

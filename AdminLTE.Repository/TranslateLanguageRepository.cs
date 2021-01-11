@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace AdminLTE.Repository
 {
-    public class TranslateLanguageRepository : Repository<TranslationLanguage>, ITranslationLanguageRepository
+    public class TranslationLanguageRepository : Repository<TranslationLanguage>, ITranslationLanguageRepository
     {
-        public TranslateLanguageRepository(DbContext context) : base(context)
+        public TranslationLanguageRepository(DbContext context) : base(context)
         {
         }
     }

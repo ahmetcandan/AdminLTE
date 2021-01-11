@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IEntity.cs" />
+    <Compile Include="IManager.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="ITracingEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

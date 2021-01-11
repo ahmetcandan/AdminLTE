@@ -8,9 +8,8 @@ namespace AdminLTE.Core
 {
     public interface IUnitOfWork : IDisposable
     {
-        ITranslationLanguageRepository TranslationLanguages { get; }
-        IKeyValueRepository KeyValues { get; }
-        IKeyTypeRepository KeyTypes { get; }
+        ITranslationManager TranslationManager { get; }
+        IKeyManager KeyManager { get; }
 
         int Complate();
     }

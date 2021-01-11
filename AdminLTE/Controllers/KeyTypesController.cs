@@ -25,7 +25,7 @@ namespace AdminLTE.Controllers
         // GET: KeyTypes
         public ActionResult List()
         {
-            var result = (from c in UnitOfWork.KeyTypes.GetAll()
+            var result = (from c in UnitOfWork.KeyManager.GetKeyTypes()
                           select new KeyTypeView
                           {
                               Code = c.Code,

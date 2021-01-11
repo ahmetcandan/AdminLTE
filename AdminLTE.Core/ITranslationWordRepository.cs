@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace AdminLTE.Core
 {
-    public interface IKeyValueRepository : IRepository<KeyValue>
+    public interface ITranslationWordRepository : IRepository<TranslationWord>
     {
-        IQueryable<KeyValue> GetKeyValuesForKeyTypeId(int keyTypeId);
+        IEnumerable<TranslationWord> GetTranslationWordsForLanguageCode(string languageCode);
     }
 }

@@ -1,15 +1,16 @@
 ﻿using AdminLTE.Interface;
-using AdminLTE.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AdminLTE.Model;
 
 namespace AdminLTE.Core
 {
-    public interface IKeyValueRepository : IRepository<KeyValue>
+    public interface IKeyManager : IManager
     {
-        IQueryable<KeyValue> GetKeyValuesForKeyTypeId(int keyTypeId);
+        IEnumerable<KeyValue> GetKeyValues(int keyTypeId);
+        IEnumerable<KeyType> GetKeyTypes();
     }
 }
