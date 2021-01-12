@@ -32,5 +32,35 @@ namespace AdminLTE.Manager
         {
             return TranslationWordRepository.GetTranslationWordsForLanguageCode(languageCode);
         }
+
+        public TranslationWord AddTranslationWord(TranslationWord translationWord)
+        {
+            return TranslationWordRepository.Add(translationWord);
+        }
+
+        public TranslationWord UpdateTranslationWork(TranslationWord translationWord)
+        {
+            return TranslationWordRepository.Update(translationWord);
+        }
+
+        public TranslationWord DeleteTranslationWord(TranslationWord translationWord)
+        {
+            return TranslationWordRepository.Remove(translationWord);
+        }
+
+        public TranslationLanguage AddTranslationLanguage(TranslationLanguage translationLanguage)
+        {
+            return TranslationLanguageRepository.Add(translationLanguage);
+        }
+
+        public TranslationLanguage UpdateTranslationLanguage(TranslationLanguage translationLanguage)
+        {
+            return TranslationLanguageRepository.Update(translationLanguage);
+        }
+
+        public TranslationLanguage DeleteTranslationLanguage(TranslationLanguage translationLanguage)
+        {
+            return TranslationLanguageRepository.Remove(translationLanguage);
+        }
     }
 }

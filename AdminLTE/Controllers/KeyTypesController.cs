@@ -15,8 +15,6 @@ namespace AdminLTE.Controllers
     [System.Web.Mvc.Authorize(Roles = "Admin,User")]
     public class KeyTypesController : BaseController
     {
-        private DbModelContext db = new DbModelContext();
-
         public ActionResult Index()
         {
             return PartialView();
@@ -54,8 +52,8 @@ namespace AdminLTE.Controllers
                 keyType.Code = instance.Code;
                 keyType.Description = instance.Description;
                 keyType.IsDeleted = false;
-                db.KeyTypes.Add(keyType);
-                db.SaveChanges();
+                UnitOfWork.KeyManager.AddKeyType(keyType);
+                UnitOfWork.Complate();
                 return PartialView(keyType);
             }
 
@@ -69,7 +67,7 @@ namespace AdminLTE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            KeyType keyType = db.KeyTypes.Find(id);
+            KeyType keyType = UnitOfWork.KeyManager.GetKeyType(id.Value);
             if (keyType == null)
             {
                 return HttpNotFound();
@@ -103,10 +101,10 @@ namespace AdminLTE.Controllers
         {
             if (ModelState.IsValid)
             {
-                var keyType = db.KeyTypes.Find(instance.KeyTypeId);
+                var keyType = UnitOfWork.KeyManager.GetKeyType(instance.KeyTypeId);
                 keyType.Code = instance.Code;
                 keyType.Description = instance.Description;
-                db.SaveChanges();
+                UnitOfWork.KeyManager.UpdateKeyType(keyType);
                 return PartialView(instance);
             }
             return PartialView(instance);
@@ -119,7 +117,7 @@ namespace AdminLTE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            KeyType keyType = db.KeyTypes.Find(id);
+            KeyType keyType = UnitOfWork.KeyManager.GetKeyType(id.Value);
             if (keyType == null)
             {
                 return HttpNotFound();
@@ -137,9 +135,8 @@ namespace AdminLTE.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            KeyType keyType = db.KeyTypes.Find(id);
-            db.KeyTypes.Remove(keyType);
-            db.SaveChanges();
+            KeyType keyType = UnitOfWork.KeyManager.GetKeyType(id);
+            UnitOfWork.KeyManager.DeleteKeyType(keyType);
             return PartialView(new KeyTypeView
             {
                 Code = keyType.Code,
@@ -152,7 +149,7 @@ namespace AdminLTE.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                UnitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

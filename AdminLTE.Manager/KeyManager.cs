@@ -23,6 +23,16 @@ namespace AdminLTE.Manager
             KeyTypeRepository = new KeyTypeRepository(context);
         }
 
+        public KeyType GetKeyType(int keyTypeId)
+        {
+            return KeyTypeRepository.Get(keyTypeId);
+        }
+
+        public KeyValue GetKeyValue(int keyValueId)
+        {
+            return KeyValueRepository.Get(keyValueId);
+        }
+
         public IEnumerable<KeyType> GetKeyTypes()
         {
             return KeyTypeRepository.GetAll().ToList();
@@ -31,6 +41,36 @@ namespace AdminLTE.Manager
         public IEnumerable<KeyValue> GetKeyValues(int keyTypeId)
         {
             return KeyValueRepository.GetKeyValuesForKeyTypeId(keyTypeId).ToList();
+        }
+
+        public KeyValue AddKeyValue(KeyValue keyValue)
+        {
+            return KeyValueRepository.Add(keyValue);
+        }
+
+        public KeyValue UpdateKeyValue(KeyValue keyValue)
+        {
+            return KeyValueRepository.Update(keyValue);
+        }
+
+        public KeyValue DeleteKeyValue(KeyValue keyValue)
+        {
+            return KeyValueRepository.Remove(keyValue);
+        }
+
+        public KeyType AddKeyType(KeyType keyType)
+        {
+            return KeyTypeRepository.Add(keyType);
+        }
+
+        public KeyType UpdateKeyType(KeyType keyType)
+        {
+            return KeyTypeRepository.Update(keyType);
+        }
+
+        public KeyType DeleteKeyType(KeyType keyType)
+        {
+            return KeyTypeRepository.Remove(keyType);
         }
     }
 }

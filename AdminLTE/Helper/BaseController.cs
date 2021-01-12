@@ -13,7 +13,6 @@ namespace AdminLTE.Controllers
 {
     public class BaseController : Controller
     {
-        private DbModelContext db = new DbModelContext();
         protected UnitOfWork UnitOfWork = new UnitOfWork(new DbModelContext());
 
         private readonly static Dictionary<string, string> _translate = new Dictionary<string, string>();

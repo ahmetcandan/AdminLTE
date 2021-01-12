@@ -16,6 +16,8 @@ namespace AdminLTE.Interface
         TEntity Add(TEntity entity);
         IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entities);
 
+        TEntity Update(TEntity entity);
+
         TEntity Remove(TEntity entity);
         IEnumerable<TEntity> RemoveRange(IEnumerable<TEntity> entities);
     }

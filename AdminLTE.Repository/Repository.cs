@@ -28,6 +28,13 @@ namespace AdminLTE.Repository
             return Context.Set<TEntity>().AddRange(entities);
         }
 
+        public TEntity Update(TEntity entity)
+        {
+            Context.Set<TEntity>().Attach(entity);
+            Context.Entry(entity).State = EntityState.Modified;
+            return entity;
+        }
+
         public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return Context.Set<TEntity>().Where(predicate);
