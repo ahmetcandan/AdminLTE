@@ -17,6 +17,7 @@ using AdminLTE.Models;
 using AdminLTE.Providers;
 using AdminLTE.Results;
 using System.Linq;
+using AdminLTE.Manager;
 
 namespace AdminLTE.ApiControllers
 {
@@ -28,10 +29,11 @@ namespace AdminLTE.ApiControllers
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
         private ApplicationSignInManager _signInManager;
-        private DbModelContext db = new DbModelContext();
+        private UnitOfWork unitOfWork;
 
         public AccountController()
         {
+            unitOfWork = new UnitOfWork(new DbModelContext());
         }
 
         public AccountController(ApplicationUserManager userManager,
@@ -39,6 +41,7 @@ namespace AdminLTE.ApiControllers
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
+            unitOfWork = new UnitOfWork(new DbModelContext());
         }
 
         //
@@ -62,7 +65,7 @@ namespace AdminLTE.ApiControllers
                     case SignInStatus.Success:
                         LoginResponseViewModel response = new LoginResponseViewModel();
                         response.Email = model.Email;
-                        var user = db.Users.Where(c => c.Email == model.Email || c.UserName == model.Email).FirstOrDefault();
+                        var user = unitOfWork.CredentialManager.GetUserForUserName(model.Email);
                         response.UserName = user.UserName;
                         response.Roles = await UserManager.GetRolesAsync(user.Id);
                         return response;
@@ -136,7 +139,7 @@ namespace AdminLTE.ApiControllers
         [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
         {
-            IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            Model.User user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
             if (user == null)
             {
@@ -308,7 +311,7 @@ namespace AdminLTE.ApiControllers
                 return new ChallengeResult(provider, this);
             }
 
-            ApplicationUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
+            Model.User user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
                 externalLogin.ProviderKey));
 
             bool hasRegistered = user != null;
@@ -386,7 +389,7 @@ namespace AdminLTE.ApiControllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new Model.User() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -415,7 +418,7 @@ namespace AdminLTE.ApiControllers
                 return InternalServerError();
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new Model.User() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user);
             if (!result.Succeeded)

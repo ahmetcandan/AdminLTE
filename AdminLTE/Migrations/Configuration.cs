@@ -1,5 +1,6 @@
 namespace AdminLTE.Migrations
 {
+    using AdminLTE.Model;
     using AdminLTE.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
@@ -20,7 +21,7 @@ namespace AdminLTE.Migrations
         {
             get
             {
-                return _userManager ?? new ApplicationUserManager(new UserStore<ApplicationUser>(new DbModelContext()));
+                return _userManager ?? new ApplicationUserManager(new UserStore<User>(new DbModelContext()));
             }
             private set
             {
@@ -30,11 +31,11 @@ namespace AdminLTE.Migrations
 
         protected override void Seed(AdminLTE.Models.DbModelContext context)
         {
-            var adminRole = new IdentityRole
+            var adminRole = new Role
             {
                 Name = "Admin"
             };
-            var userRole = new IdentityRole
+            var userRole = new Role
             {
                 Name = "User"
             };
@@ -42,14 +43,14 @@ namespace AdminLTE.Migrations
             context.Roles.Add(userRole);
             context.SaveChanges();
 
-            var admin = new ApplicationUser()
+            var admin = new User()
             {
                 UserName = "admin",
                 Email = "admin@adminlte.com",
                 LockoutEnabled = true
             };
 
-            var user = new ApplicationUser()
+            var user = new User()
             {
                 UserName = "user",
                 Email = "user@adminlte.com",

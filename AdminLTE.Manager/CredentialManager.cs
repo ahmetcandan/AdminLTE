@@ -64,5 +64,10 @@ namespace AdminLTE.Manager
             context.SaveChanges();
             return result;
         }
+
+        public User GetUserForUserName(string userName)
+        {
+            return UserRepository.Find(c => c.UserName == userName || c.Email == userName).FirstOrDefault();
+        }
     }
 }

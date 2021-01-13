@@ -12,6 +12,7 @@ namespace AdminLTE.Core
     {
         IEnumerable<User> GetAllUser();
         User GetUser(string id);
+        User GetUserForUserName(string userName);
         Role GetRole(string id);
         IEnumerable<Role> GetAllRoles();
         Role AddRole(Role role);

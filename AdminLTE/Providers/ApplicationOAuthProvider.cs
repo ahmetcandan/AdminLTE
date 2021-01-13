@@ -31,7 +31,7 @@ namespace AdminLTE.Providers
         {
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
-            ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+            Model.User user = await userManager.FindAsync(context.UserName, context.Password);
 
             if (user == null)
             {

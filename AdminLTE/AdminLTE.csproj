@@ -323,9 +323,9 @@
     <Compile Include="Helper\BaseController.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Helper\SignalRHub.cs" />
-    <Compile Include="Migrations\202012271607511_FirstMigration.cs" />
-    <Compile Include="Migrations\202012271607511_FirstMigration.Designer.cs">
-      <DependentUpon>202012271607511_FirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\202101132003519_FirstMigrations.cs" />
+    <Compile Include="Migrations\202101132003519_FirstMigrations.Designer.cs">
+      <DependentUpon>202101132003519_FirstMigrations.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountApiBindingModels.cs" />
@@ -478,11 +478,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202012271607511_FirstMigration.resx">
-      <DependentUpon>202012271607511_FirstMigration.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\AdminLTE.Core\AdminLTE.Core.csproj">
       <Project>{28a21833-0714-47c0-983f-304d474b3b02}</Project>
       <Name>AdminLTE.Core</Name>
@@ -499,6 +494,11 @@
       <Project>{9403b98b-51c2-49b2-81cd-2fadacac2068}</Project>
       <Name>AdminLTE.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202101132003519_FirstMigrations.resx">
+      <DependentUpon>202101132003519_FirstMigrations.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

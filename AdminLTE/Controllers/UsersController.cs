@@ -78,7 +78,7 @@ namespace AdminLTE.Controllers
 
         public async Task<ActionResult> Create(UserView instance)
         {
-            var user = new ApplicationUser { UserName = instance.UserName, Email = instance.Email };
+            var user = new Model.User { UserName = instance.UserName, Email = instance.Email };
             var result = await UserManager.CreateAsync(user, instance.Password);
             if (result.Succeeded && !string.IsNullOrEmpty(instance.RoleNames))
                 await UserManager.AddToRolesAsync(user.Id, instance.RoleNames.Split(','));
