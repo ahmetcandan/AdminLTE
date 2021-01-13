@@ -1,6 +1,6 @@
 ﻿namespace AdminLTE.Interface
 {
-    public interface IManager
+    public interface IEntity
     {
 
     }

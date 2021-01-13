@@ -1,12 +1,9 @@
 ﻿using AdminLTE.Core;
 using AdminLTE.Model;
-using System;
+using AdminLTE.Repository;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AdminLTE.Repository;
 
 namespace AdminLTE.Manager
 {
@@ -35,32 +32,44 @@ namespace AdminLTE.Manager
 
         public TranslationWord AddTranslationWord(TranslationWord translationWord)
         {
-            return TranslationWordRepository.Add(translationWord);
+            var result = TranslationWordRepository.Add(translationWord);
+            context.SaveChanges();
+            return result;
         }
 
         public TranslationWord UpdateTranslationWork(TranslationWord translationWord)
         {
-            return TranslationWordRepository.Update(translationWord);
+            var result = TranslationWordRepository.Update(translationWord);
+            context.SaveChanges();
+            return result;
         }
 
         public TranslationWord DeleteTranslationWord(TranslationWord translationWord)
         {
-            return TranslationWordRepository.Remove(translationWord);
+            var result = TranslationWordRepository.Remove(translationWord);
+            context.SaveChanges();
+            return result;
         }
 
         public TranslationLanguage AddTranslationLanguage(TranslationLanguage translationLanguage)
         {
-            return TranslationLanguageRepository.Add(translationLanguage);
+            var result = TranslationLanguageRepository.Add(translationLanguage);
+            context.SaveChanges();
+            return result;
         }
 
         public TranslationLanguage UpdateTranslationLanguage(TranslationLanguage translationLanguage)
         {
-            return TranslationLanguageRepository.Update(translationLanguage);
+            var result = TranslationLanguageRepository.Update(translationLanguage);
+            context.SaveChanges();
+            return result;
         }
 
         public TranslationLanguage DeleteTranslationLanguage(TranslationLanguage translationLanguage)
         {
-            return TranslationLanguageRepository.Remove(translationLanguage);
+            var result = TranslationLanguageRepository.Remove(translationLanguage);
+            context.SaveChanges();
+            return result;
         }
 
         public TranslationWord GetTranslationWord(int id)

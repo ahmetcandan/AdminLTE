@@ -1,14 +1,12 @@
-﻿using System;
+﻿using AdminLTE.DataAccess;
+using AdminLTE.Providers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
-using Owin;
-using AdminLTE.Models;
 using Microsoft.Owin.Security.OAuth;
-using AdminLTE.Providers;
-using AdminLTE.DataAccess;
+using Owin;
+using System;
 
 namespace AdminLTE
 {
@@ -41,7 +39,7 @@ namespace AdminLTE
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.

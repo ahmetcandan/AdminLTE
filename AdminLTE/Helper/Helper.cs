@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http.Routing;
-using WebHelpers.Mvc5;
 
 namespace AdminLTE
 {
@@ -20,14 +15,14 @@ namespace AdminLTE
 
         }
 
-        public UserException(string message) 
+        public UserException(string message)
             : base(message)
         {
 
         }
 
         public UserException(string message, Exception innerException)
-            :base(message, innerException)
+            : base(message, innerException)
         {
 
         }
