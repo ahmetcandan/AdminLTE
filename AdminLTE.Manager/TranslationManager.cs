@@ -62,5 +62,20 @@ namespace AdminLTE.Manager
         {
             return TranslationLanguageRepository.Remove(translationLanguage);
         }
+
+        public TranslationWord GetTranslationWord(int id)
+        {
+            return TranslationWordRepository.Get(id);
+        }
+
+        public TranslationLanguage GetTranslationLanguage(int id)
+        {
+            return TranslationLanguageRepository.Get(id);
+        }
+
+        public TranslationLanguage GetTranslationLanguage(string languageCode)
+        {
+            return TranslationLanguageRepository.Find(c => c.Code == languageCode).SingleOrDefault();
+        }
     }
 }

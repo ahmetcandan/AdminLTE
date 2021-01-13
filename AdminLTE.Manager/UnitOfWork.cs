@@ -19,10 +19,12 @@ namespace AdminLTE.Manager
             this.context = context;
             TranslationManager = new TranslationManager(this.context);
             KeyManager = new KeyManager(this.context);
+            CredentialManager = new CredentialManager(this.context);
         }
 
         public ITranslationManager TranslationManager { get; private set; }
         public IKeyManager KeyManager { get; private set; }
+        public ICredentialManager CredentialManager { get; private set; }
 
         public int Complate()
         {
