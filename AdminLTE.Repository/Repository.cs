@@ -40,9 +40,9 @@ namespace AdminLTE.Repository
             return Context.Set<TEntity>().Where(predicate);
         }
 
-        public TEntity Get(object id)
+        public TEntity Get(params object[] keyValues)
         {
-            return Context.Set<TEntity>().Find(id);
+            return Context.Set<TEntity>().Find(keyValues);
         }
 
         public IQueryable<TEntity> GetAll()

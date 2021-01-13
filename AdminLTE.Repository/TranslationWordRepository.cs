@@ -20,6 +20,7 @@ namespace AdminLTE.Repository
             return (from w in Context.Set<TranslationWord>()
                     join l in Context.Set<TranslationLanguage>()
                         on w.TranslationLanguageId equals l.TranslationLanguageId
+                    where l.Code == languageCode
                     select w).ToList();
         }
     }
