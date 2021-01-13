@@ -13,7 +13,9 @@ namespace AdminLTE.Core
         IEnumerable<TranslationWord> GetTranslationWords(string languageCode);
         IEnumerable<TranslationLanguage> GetTranslationLanguages();
 
-
+        TranslationWord GetTranslationWord(int id);
+        TranslationLanguage GetTranslationLanguage(int id);
+        TranslationLanguage GetTranslationLanguage(string languageCode);
         TranslationWord AddTranslationWord(TranslationWord translationWord);
         TranslationWord UpdateTranslationWork(TranslationWord translationWord);
         TranslationWord DeleteTranslationWord(TranslationWord translationWord);
