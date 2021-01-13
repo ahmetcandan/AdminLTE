@@ -9,7 +9,7 @@ namespace AdminLTE.Interface
 {
     public interface IRepository<TEntity> where TEntity : IEntity
     {
-        TEntity Get(object id);
+        TEntity Get(params object[] keyValues);
         IQueryable<TEntity> GetAll();
         IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
 
