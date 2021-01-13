@@ -9,7 +9,7 @@ namespace AdminLTE.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AdminLTE.Models.DbModelContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<AdminLTE.DataAccess.DbModelContext>
     {
         public Configuration()
         {
@@ -21,7 +21,7 @@ namespace AdminLTE.Migrations
         {
             get
             {
-                return _userManager ?? new ApplicationUserManager(new UserStore<User>(new DbModelContext()));
+                return _userManager ?? new ApplicationUserManager(new UserStore<User>(new AdminLTE.DataAccess.DbModelContext()));
             }
             private set
             {
@@ -29,7 +29,7 @@ namespace AdminLTE.Migrations
             }
         }
 
-        protected override void Seed(AdminLTE.Models.DbModelContext context)
+        protected override void Seed(AdminLTE.DataAccess.DbModelContext context)
         {
             var adminRole = new Role
             {

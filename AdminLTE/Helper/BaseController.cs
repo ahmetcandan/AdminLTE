@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Filters;
 using System.Web.Routing;
 using AdminLTE.Manager;
+using AdminLTE.DataAccess;
 
 namespace AdminLTE.Controllers
 {

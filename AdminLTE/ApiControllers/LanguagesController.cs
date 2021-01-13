@@ -8,21 +8,20 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AdminLTE.DataAccess;
 using AdminLTE.Models;
 
 namespace AdminLTE.ApiControllers
 {
-    public class LanguagesController : ApiController
+    public class LanguagesController : BaseApiController
     {
-        private Models.DbModelContext db = new Models.DbModelContext();
 
         // GET: api/Languages
         [HttpGet]
         [ResponseType(typeof(IList<TranslationLanguageView>))]
         public IHttpActionResult Languages()
         {
-            var result = (from l in db.TranslationLanguages
-                          where l.IsDeleted == false
+            var result = (from l in UnitOfWork.TranslationManager.GetTranslationLanguages()
                           select new TranslationLanguageView
                           {
                               Code = l.Code,
@@ -36,7 +35,7 @@ namespace AdminLTE.ApiControllers
         {
             if (disposing)
             {
-                db.Dispose();
+                UnitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

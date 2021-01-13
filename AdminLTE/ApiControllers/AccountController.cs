@@ -18,30 +18,24 @@ using AdminLTE.Providers;
 using AdminLTE.Results;
 using System.Linq;
 using AdminLTE.Manager;
+using AdminLTE.DataAccess;
 
 namespace AdminLTE.ApiControllers
 {
 
     [Authorize]
     [RoutePrefix("api/Account")]
-    public class AccountController : ApiController
+    public class AccountController : BaseApiController
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
         private ApplicationSignInManager _signInManager;
-        private UnitOfWork unitOfWork;
-
-        public AccountController()
-        {
-            unitOfWork = new UnitOfWork(new DbModelContext());
-        }
 
         public AccountController(ApplicationUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
-            unitOfWork = new UnitOfWork(new DbModelContext());
         }
 
         //
@@ -65,7 +59,7 @@ namespace AdminLTE.ApiControllers
                     case SignInStatus.Success:
                         LoginResponseViewModel response = new LoginResponseViewModel();
                         response.Email = model.Email;
-                        var user = unitOfWork.CredentialManager.GetUserForUserName(model.Email);
+                        var user = UnitOfWork.CredentialManager.GetUserForUserName(model.Email);
                         response.UserName = user.UserName;
                         response.Roles = await UserManager.GetRolesAsync(user.Id);
                         return response;

@@ -8,23 +8,20 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using AdminLTE.DataAccess;
 using AdminLTE.Models;
 
 namespace AdminLTE.ApiControllers
 {
-    public class TranslationWordsController : ApiController
+    public class TranslationWordsController : BaseApiController
     {
-        private Models.DbModelContext db = new Models.DbModelContext();
-
         // GET: api/TranslationWords/TR
         [HttpGet]
         [ResponseType(typeof(IList<TranslationWordView>))]
         public IHttpActionResult GetTranslationWord(string id)
         {
             id = id.ToLower();
-            var result = (from l in db.TranslationLanguages
-                          join w in db.TranslationWords on l.TranslationLanguageId equals w.TranslationLanguageId
-                          where l.Code == id
+            var result = (from w in UnitOfWork.TranslationManager.GetTranslationWords(id)
                           select new TranslationWordView
                           {
                               Code = w.Code,
@@ -38,7 +35,7 @@ namespace AdminLTE.ApiControllers
         {
             if (disposing)
             {
-                db.Dispose();
+                UnitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

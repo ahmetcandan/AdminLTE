@@ -8,6 +8,7 @@ using Owin;
 using AdminLTE.Models;
 using Microsoft.Owin.Security.OAuth;
 using AdminLTE.Providers;
+using AdminLTE.DataAccess;
 
 namespace AdminLTE
 {

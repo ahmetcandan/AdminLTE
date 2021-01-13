@@ -305,7 +305,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiControllers\AccountController.cs" />
-    <Compile Include="ApiControllers\KeyValuesController.cs" />
+    <Compile Include="ApiControllers\BaseApiController.cs" />
     <Compile Include="ApiControllers\LanguagesController.cs" />
     <Compile Include="ApiControllers\TranslationWordsController.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -481,6 +481,10 @@
     <ProjectReference Include="..\AdminLTE.Core\AdminLTE.Core.csproj">
       <Project>{28a21833-0714-47c0-983f-304d474b3b02}</Project>
       <Name>AdminLTE.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AdminLTE.DataAccess\AdminLTE.DataAccess.csproj">
+      <Project>{7db44149-0e97-4b1a-a5a1-aa0d28bd1dc0}</Project>
+      <Name>AdminLTE.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\AdminLTE.Interface\AdminLTE.Interface.csproj">
       <Project>{178024d9-7335-493a-bec8-eab8f3d9b7b3}</Project>
