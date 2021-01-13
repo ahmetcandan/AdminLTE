@@ -14,8 +14,6 @@ namespace AdminLTE.Controllers
     [Authorize(Roles = "Admin")]
     public class TranslationWordsController : BaseController
     {
-        private Models.DbModelContext db = new Models.DbModelContext();
-
         // GET: TranslationWords
         public ActionResult Index()
         {
@@ -25,9 +23,7 @@ namespace AdminLTE.Controllers
         public ActionResult List(string id)
         {
             id = id.ToLower();
-            var translationWords = (from l in db.TranslationLanguages
-                                    join w in db.TranslationWords on l.TranslationLanguageId equals w.TranslationLanguageId
-                                    where l.Code == id
+            var translationWords = (from w in UnitOfWork.TranslationManager.GetTranslationWords(id)
                                     select new TranslationWordView
                                     {
                                         Code = w.Code,
@@ -42,9 +38,9 @@ namespace AdminLTE.Controllers
         public ActionResult Create(string languageCode)
         {
             if (string.IsNullOrEmpty(languageCode))
-                ViewBag.TranslationLanguageId = new SelectList(db.TranslationLanguages, "TranslationLanguageId", "Description");
+                ViewBag.TranslationLanguageId = new SelectList(UnitOfWork.TranslationManager.GetTranslationLanguages(), "TranslationLanguageId", "Description");
             else
-                ViewBag.TranslationLanguageId = new SelectList(db.TranslationLanguages.Where(c => c.Code == languageCode), "TranslationLanguageId", "Description");
+                ViewBag.TranslationLanguageId = new SelectList(UnitOfWork.TranslationManager.GetTranslationLanguages().Where(c => c.Code == languageCode), "TranslationLanguageId", "Description");
             return PartialView(new TranslationWordView());
         }
 
@@ -55,7 +51,7 @@ namespace AdminLTE.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "TranslationWordId,TranslationLanguageId,Description,Code,IsDeleted")] TranslationWordView instance)
         {
-            ViewBag.TranslationLanguageId = new SelectList(db.TranslationLanguages, "TranslationLanguageId", "Description", instance.TranslationLanguageId);
+            ViewBag.TranslationLanguageId = new SelectList(UnitOfWork.TranslationManager.GetTranslationLanguages(), "TranslationLanguageId", "Description", instance.TranslationLanguageId);
             TranslationWord translationWord = null;
             if (ModelState.IsValid)
             {
@@ -66,8 +62,7 @@ namespace AdminLTE.Controllers
                     IsDeleted = false,
                     TranslationLanguageId = instance.TranslationLanguageId
                 };
-                db.TranslationWords.Add(translationWord);
-                db.SaveChanges();
+                UnitOfWork.TranslationManager.AddTranslationWord(translationWord);
                 return PartialView(instance);
             }
 
@@ -81,8 +76,8 @@ namespace AdminLTE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TranslationWord translationWord = db.TranslationWords.Find(id);
-            ViewBag.TranslationLanguageId = new SelectList(db.TranslationLanguages.Where(c => c.TranslationLanguageId == translationWord.TranslationLanguageId), "TranslationLanguageId", "Description");
+            TranslationWord translationWord = UnitOfWork.TranslationManager.GetTranslationWord(id.Value);
+            ViewBag.TranslationLanguageId = new SelectList(UnitOfWork.TranslationManager.GetTranslationLanguages().Where(c => c.TranslationLanguageId == translationWord.TranslationLanguageId), "TranslationLanguageId", "Description");
             if (translationWord == null)
             {
                 return HttpNotFound();
@@ -104,16 +99,15 @@ namespace AdminLTE.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "TranslationWordId,TranslationLanguageId,Description,Code,IsDeleted")] TranslationWordView instance)
         {
-            ViewBag.TranslationLanguageId = new SelectList(db.TranslationLanguages, "TranslationLanguageId", "Description", instance.TranslationLanguageId);
-            TranslationWord translationWord = db.TranslationWords.Find(instance.TranslationWordId);
+            ViewBag.TranslationLanguageId = new SelectList(UnitOfWork.TranslationManager.GetTranslationLanguages(), "TranslationLanguageId", "Description", instance.TranslationLanguageId);
+            TranslationWord translationWord = UnitOfWork.TranslationManager.GetTranslationWord(instance.TranslationWordId);
             if (ModelState.IsValid)
             {
                 translationWord.Code = instance.Code;
                 translationWord.TranslationWordId = instance.TranslationWordId;
                 translationWord.TranslationLanguageId = instance.TranslationLanguageId;
                 translationWord.Description = instance.Description;
-                db.Entry(translationWord).State = EntityState.Modified;
-                db.SaveChanges();
+                UnitOfWork.TranslationManager.UpdateTranslationWork(translationWord);
                 return PartialView(instance);
             }
             return PartialView(instance);
@@ -126,7 +120,7 @@ namespace AdminLTE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TranslationWord translationWord = db.TranslationWords.Find(id);
+            TranslationWord translationWord = UnitOfWork.TranslationManager.GetTranslationWord(id.Value);
             if (translationWord == null)
             {
                 return HttpNotFound();
@@ -146,9 +140,8 @@ namespace AdminLTE.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TranslationWord translationWord = db.TranslationWords.Find(id);
-            db.TranslationWords.Remove(translationWord);
-            db.SaveChanges();
+            TranslationWord translationWord = UnitOfWork.TranslationManager.GetTranslationWord(id);
+            UnitOfWork.TranslationManager.DeleteTranslationWord(translationWord);
             return PartialView(new TranslationWordView
             {
                 Code = translationWord.Code,
@@ -162,7 +155,7 @@ namespace AdminLTE.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                UnitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

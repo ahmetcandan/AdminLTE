@@ -1,4 +1,5 @@
-﻿using AdminLTE.Models;
+﻿using AdminLTE.Model;
+using AdminLTE.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,6 @@ namespace AdminLTE.Controllers
     [Authorize(Roles = "Admin")]
     public class RolesController : BaseController
     {
-        private DbModelContext db = new DbModelContext();
-
         public ActionResult Index()
         {
             return PartialView();
@@ -21,7 +20,7 @@ namespace AdminLTE.Controllers
         // GET: Roles
         public ActionResult List()
         {
-            var result = (from c in db.Roles
+            var result = (from c in UnitOfWork.CredentialManager.GetAllRoles()
                           select new RoleView
                           {
                               Id = c.Id,
@@ -38,12 +37,11 @@ namespace AdminLTE.Controllers
 
         public ActionResult Create(RoleView instance)
         {
-            var role = new IdentityRole
+            var role = new Role
             {
                 Name = instance.RoleName
             };
-            db.Roles.Add(role);
-            db.SaveChanges();
+            UnitOfWork.CredentialManager.AddRole(role);
             return PartialView(instance);
         }
 
@@ -51,7 +49,7 @@ namespace AdminLTE.Controllers
         public ActionResult Edit(string id)
         {
             throw new UserException(Translate("user-not-found"));
-            var role = db.Roles.Find(id);
+            var role = UnitOfWork.CredentialManager.GetRole(id);
             return PartialView(new RoleView
             {
                 Id = role.Id,
@@ -62,10 +60,19 @@ namespace AdminLTE.Controllers
         [HttpPost]
         public ActionResult Edit(RoleView instance)
         {
-            var role = db.Roles.Find(instance.Id);
+            var role = UnitOfWork.CredentialManager.GetRole(instance.Id);
             role.Name = instance.RoleName;
-            db.SaveChanges();
+            UnitOfWork.CredentialManager.UpdateRole(role);
             return PartialView(instance);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                UnitOfWork.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

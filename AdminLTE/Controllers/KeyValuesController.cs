@@ -16,8 +16,6 @@ namespace AdminLTE.Controllers
     [Authorize(Roles = "Admin,User")]
     public class KeyValuesController : BaseController
     {
-        private DbModelContext db = new DbModelContext();
-
         // GET: Index
         public ActionResult Index()
         {
@@ -51,9 +49,9 @@ namespace AdminLTE.Controllers
         public ActionResult Create(int? keyTypeId)
         {
             if (keyTypeId.HasValue)
-                ViewBag.KeyTypeId = new SelectList(db.KeyTypes.Where(c => c.KeyTypeId == keyTypeId.Value), "KeyTypeId", "Description");
+                ViewBag.KeyTypeId = new SelectList(UnitOfWork.KeyManager.GetKeyTypes().Where(c => c.KeyTypeId == keyTypeId.Value), "KeyTypeId", "Description");
             else
-                ViewBag.KeyTypeId = new SelectList(db.KeyTypes, "KeyTypeId", "Description");
+                ViewBag.KeyTypeId = new SelectList(UnitOfWork.KeyManager.GetKeyTypes(), "KeyTypeId", "Description");
             return PartialView(new KeyValueView());
         }
 
@@ -77,12 +75,11 @@ namespace AdminLTE.Controllers
                 keyValue.KeyTypeId = instance.KeyTypeId;
                 keyValue.StartDate = instance.StartDate;
                 keyValue.Value = instance.Value;
-                db.KeyValues.Add(keyValue);
-                db.SaveChanges();
+                UnitOfWork.KeyManager.AddKeyValue(keyValue);
                 return PartialView(instance);
             }
 
-            ViewBag.KeyTypeId = new SelectList(db.KeyTypes, "KeyTypeId", "Description", instance.KeyTypeId);
+            ViewBag.KeyTypeId = new SelectList(UnitOfWork.KeyManager.GetKeyTypes(), "KeyTypeId", "Description", instance.KeyTypeId);
             return PartialView(instance);
         }
 
@@ -93,12 +90,12 @@ namespace AdminLTE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            KeyValue keyValue = db.KeyValues.Find(id);
+            KeyValue keyValue = UnitOfWork.KeyManager.GetKeyValue(id.Value);
             if (keyValue == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.KeyTypeId = new SelectList(db.KeyTypes, "KeyTypeId", "Description", keyValue.KeyTypeId);
+            ViewBag.KeyTypeId = new SelectList(UnitOfWork.KeyManager.GetKeyTypes(), "KeyTypeId", "Description", keyValue.KeyTypeId);
             return PartialView(new KeyValueView
             {
                 Description = keyValue.Description,
@@ -126,7 +123,7 @@ namespace AdminLTE.Controllers
         {
             if (ModelState.IsValid)
             {
-                var keyValue = db.KeyValues.Find(instance.KeyValueId);
+                var keyValue = UnitOfWork.KeyManager.GetKeyValue(instance.KeyValueId);
                 keyValue.ModifiedDate = DateTime.Now;
                 keyValue.ModifiedUser = User.Identity.Name;
                 keyValue.Description = instance.Description;
@@ -137,10 +134,10 @@ namespace AdminLTE.Controllers
                 keyValue.KeyTypeId = instance.KeyTypeId;
                 keyValue.StartDate = instance.StartDate;
                 keyValue.Value = instance.Value;
-                db.SaveChanges();
+                UnitOfWork.KeyManager.UpdateKeyValue(keyValue);
                 return PartialView(keyValue);
             }
-            ViewBag.KeyTypeId = new SelectList(db.KeyTypes, "KeyTypeId", "Description", instance.KeyTypeId);
+            ViewBag.KeyTypeId = new SelectList(UnitOfWork.KeyManager.GetKeyTypes(), "KeyTypeId", "Description", instance.KeyTypeId);
             return PartialView(instance);
         }
 
@@ -151,7 +148,7 @@ namespace AdminLTE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            KeyValue keyValue = db.KeyValues.Find(id);
+            KeyValue keyValue = UnitOfWork.KeyManager.GetKeyValue(id.Value);
             if (keyValue == null)
             {
                 return HttpNotFound();
@@ -179,9 +176,8 @@ namespace AdminLTE.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            KeyValue keyValue = db.KeyValues.Find(id);
-            db.KeyValues.Remove(keyValue);
-            db.SaveChanges();
+            KeyValue keyValue = UnitOfWork.KeyManager.GetKeyValue(id);
+            UnitOfWork.KeyManager.DeleteKeyValue(keyValue);
             return PartialView(new KeyValueView
             {
                 Description = keyValue.Description,
@@ -204,7 +200,7 @@ namespace AdminLTE.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                UnitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

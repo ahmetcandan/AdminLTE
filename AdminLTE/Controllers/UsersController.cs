@@ -15,7 +15,6 @@ namespace AdminLTE.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private Models.DbModelContext db = new Models.DbModelContext();
 
         public ApplicationSignInManager SignInManager
         {
@@ -60,7 +59,7 @@ namespace AdminLTE.Controllers
         // GET: Users
         public ActionResult List()
         {
-            var users = from u in db.Users
+            var users = from u in UnitOfWork.CredentialManager.GetAllUser()
                         select new UserView
                         {
                             Email = u.Email,
@@ -73,7 +72,7 @@ namespace AdminLTE.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            ViewBag.Roles = (from c in db.Roles select c.Name).ToList();
+            ViewBag.Roles = UnitOfWork.CredentialManager.GetAllRoles().Select(c => c.Name).ToList();
             return PartialView(new UserView());
         }
 
@@ -89,7 +88,7 @@ namespace AdminLTE.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(string id)
         {
-            var user = db.Users.Find(id);
+            var user = UnitOfWork.CredentialManager.GetUser(id);
             var result = new UserView
             {
                 Id = user.Id,
@@ -97,7 +96,7 @@ namespace AdminLTE.Controllers
                 UserName = user.UserName
             };
             var userRoles = await UserManager.GetRolesAsync(user.Id);
-            ViewBag.Roles = (from c in db.Roles select c.Name).ToList();
+            ViewBag.Roles = UnitOfWork.CredentialManager.GetAllRoles().ToList();
             result.Roles = (from c in userRoles
                             select new RoleView
                             {
@@ -110,12 +109,21 @@ namespace AdminLTE.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(UserView instance)
         {
-            var user = db.Users.Find(instance.Id);
+            var user = UnitOfWork.CredentialManager.GetUser(instance.Id);
             var requestRoles = instance.RoleNames.Split(',');
             var currentRoles = await UserManager.GetRolesAsync(user.Id);
             await UserManager.RemoveFromRolesAsync(user.Id, currentRoles.Where(c => !requestRoles.Any(r => r == c)).ToArray());
             await UserManager.AddToRolesAsync(user.Id, requestRoles.Where(r => !currentRoles.Any(c => c == r)).ToArray());
             return PartialView(user);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                UnitOfWork.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

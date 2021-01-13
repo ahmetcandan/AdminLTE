@@ -27,7 +27,7 @@ namespace AdminLTE.Controllers
                 {
                     _languageCode = languageCode;
                     _translate.Clear();
-                    var translateMessages = db.TranslationWords.Where(c => c.TranslationLanguage.Code == _languageCode);
+                    var translateMessages = UnitOfWork.TranslationManager.GetTranslationWords(_languageCode);
                     foreach (var message in translateMessages)
                         _translate.Add(message.Code, message.Description);
                 }

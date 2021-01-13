@@ -14,8 +14,6 @@ namespace AdminLTE.Controllers
     [Authorize(Roles = "Admin")]
     public class TranslationLanguagesController : BaseController
     {
-        private Models.DbModelContext db = new Models.DbModelContext();
-
         // GET: TranslationLanguages
         public ActionResult Index()
         {
@@ -24,7 +22,7 @@ namespace AdminLTE.Controllers
 
         public ActionResult List()
         {
-            var result = (from c in db.TranslationLanguages
+            var result = (from c in UnitOfWork.TranslationManager.GetTranslationLanguages()
                           select new TranslationLanguageView
                           {
                               Code = c.Code,
@@ -57,8 +55,7 @@ namespace AdminLTE.Controllers
                     IsDeleted = false,
                     TranslationLanguageId = instance.TranslationLanguageId
                 };
-                db.TranslationLanguages.Add(translationLanguage);
-                db.SaveChanges();
+                UnitOfWork.TranslationManager.AddTranslationLanguage(translationLanguage);
                 return PartialView(instance);
             }
 
@@ -72,7 +69,7 @@ namespace AdminLTE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TranslationLanguage translationLanguage = db.TranslationLanguages.Find(id);
+            TranslationLanguage translationLanguage = UnitOfWork.TranslationManager.GetTranslationLanguage(id.Value);
             if (translationLanguage == null)
             {
                 return HttpNotFound();
@@ -100,14 +97,13 @@ namespace AdminLTE.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "TranslationLanguageId,Description,Code,IsDeleted")] TranslationLanguageView instance)
         {
-            TranslationLanguage translationLanguage = db.TranslationLanguages.Find(instance.TranslationLanguageId);
+            TranslationLanguage translationLanguage = UnitOfWork.TranslationManager.GetTranslationLanguage(instance.TranslationLanguageId);
             if (ModelState.IsValid)
             {
                 translationLanguage.TranslationLanguageId = instance.TranslationLanguageId;
                 translationLanguage.Description = instance.Description;
                 translationLanguage.Code = instance.Code.ToUpper();
-                db.Entry(translationLanguage).State = EntityState.Modified;
-                db.SaveChanges();
+                UnitOfWork.TranslationManager.UpdateTranslationLanguage(translationLanguage);
                 return PartialView(instance);
             }
             return PartialView(instance);
@@ -120,7 +116,7 @@ namespace AdminLTE.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TranslationLanguage translationLanguage = db.TranslationLanguages.Find(id);
+            TranslationLanguage translationLanguage = UnitOfWork.TranslationManager.GetTranslationLanguage(id.Value);
             if (translationLanguage == null)
             {
                 return HttpNotFound();
@@ -138,9 +134,8 @@ namespace AdminLTE.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            TranslationLanguage translationLanguage = db.TranslationLanguages.Find(id);
-            db.TranslationLanguages.Remove(translationLanguage);
-            db.SaveChanges();
+            TranslationLanguage translationLanguage = UnitOfWork.TranslationManager.GetTranslationLanguage(id);
+            UnitOfWork.TranslationManager.DeleteTranslationLanguage(translationLanguage);
             return PartialView(new TranslationLanguageView
             {
                 Code = translationLanguage.Code,
@@ -153,7 +148,7 @@ namespace AdminLTE.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                UnitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

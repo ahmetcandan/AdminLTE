@@ -47,31 +47,39 @@ namespace AdminLTE.ApiControllers
         [AllowAnonymous]
         public async Task<LoginResponseViewModel> Login(LoginViewModel model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return null;
-            }
+                if (!ModelState.IsValid)
+                {
+                    return null;
+                }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, change to shouldLockout: true
+                var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        LoginResponseViewModel response = new LoginResponseViewModel();
+                        response.Email = model.Email;
+                        var user = db.Users.Where(c => c.Email == model.Email || c.UserName == model.Email).FirstOrDefault();
+                        response.UserName = user.UserName;
+                        response.Roles = await UserManager.GetRolesAsync(user.Id);
+                        return response;
+                    case SignInStatus.LockedOut:
+                        return null;
+                    case SignInStatus.RequiresVerification:
+                        return null;
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return null;
+                }
+            }
+            catch (Exception ex)
             {
-                case SignInStatus.Success:
-                    LoginResponseViewModel response = new LoginResponseViewModel();
-                    response.Email = model.Email;
-                    var user = db.Users.Where(c => c.Email == model.Email || c.UserName == model.Email).FirstOrDefault();
-                    response.UserName = user.UserName;
-                    response.Roles = await UserManager.GetRolesAsync(user.Id);
-                    return response;
-                case SignInStatus.LockedOut:
-                    return null;
-                case SignInStatus.RequiresVerification:
-                    return null;
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return null;
+                Console.WriteLine(ex.Message);
+                throw;
             }
         }
 
