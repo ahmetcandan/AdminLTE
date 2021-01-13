@@ -19,7 +19,7 @@ namespace AdminLTE.ApiControllers
     {
         protected UnitOfWork UnitOfWork;
 
-        public BaseController()
+        public BaseApiController()
         {
             UnitOfWork = new UnitOfWork(new DbModelContext());
         }
