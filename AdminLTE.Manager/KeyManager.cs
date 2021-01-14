@@ -1,12 +1,9 @@
 ﻿using AdminLTE.Core;
 using AdminLTE.Model;
-using System;
+using AdminLTE.Repository;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AdminLTE.Repository;
 
 namespace AdminLTE.Manager
 {
@@ -45,32 +42,44 @@ namespace AdminLTE.Manager
 
         public KeyValue AddKeyValue(KeyValue keyValue)
         {
-            return KeyValueRepository.Add(keyValue);
+            var result = KeyValueRepository.Add(keyValue);
+            context.SaveChanges();
+            return result;
         }
 
         public KeyValue UpdateKeyValue(KeyValue keyValue)
         {
-            return KeyValueRepository.Update(keyValue);
+            var result = KeyValueRepository.Update(keyValue);
+            context.SaveChanges();
+            return result;
         }
 
         public KeyValue DeleteKeyValue(KeyValue keyValue)
         {
-            return KeyValueRepository.Remove(keyValue);
+            var result = KeyValueRepository.Remove(keyValue);
+            context.SaveChanges();
+            return result;
         }
 
         public KeyType AddKeyType(KeyType keyType)
         {
-            return KeyTypeRepository.Add(keyType);
+            var result = KeyTypeRepository.Add(keyType);
+            context.SaveChanges();
+            return result;
         }
 
         public KeyType UpdateKeyType(KeyType keyType)
         {
-            return KeyTypeRepository.Update(keyType);
+            var result = KeyTypeRepository.Update(keyType);
+            context.SaveChanges();
+            return result;
         }
 
         public KeyType DeleteKeyType(KeyType keyType)
         {
-            return KeyTypeRepository.Remove(keyType);
+            var result = KeyTypeRepository.Remove(keyType);
+            context.SaveChanges();
+            return result;
         }
     }
 }

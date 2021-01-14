@@ -1,20 +1,19 @@
-﻿using AdminLTE.Models;
-using Microsoft.AspNet.SignalR.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Mvc.Filters;
-using System.Web.Routing;
+﻿using AdminLTE.DataAccess;
 using AdminLTE.Manager;
-using AdminLTE.DataAccess;
+using Microsoft.AspNet.SignalR.Client;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace AdminLTE.Controllers
 {
     public class BaseController : Controller
     {
-        protected UnitOfWork UnitOfWork = new UnitOfWork(new DbModelContext());
+        protected UnitOfWork UnitOfWork;
+
+        public BaseController()
+        {
+            UnitOfWork = new UnitOfWork(new DbModelContext());
+        }
 
         private readonly static Dictionary<string, string> _translate = new Dictionary<string, string>();
         private static string _languageCode = "";

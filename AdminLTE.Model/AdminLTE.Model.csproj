@@ -57,6 +57,7 @@
     <Compile Include="KeyType.cs" />
     <Compile Include="KeyValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TracingModel.cs" />
     <Compile Include="TranslationLanguage.cs" />
     <Compile Include="TranslationWord.cs" />
     <Compile Include="Role.cs" />

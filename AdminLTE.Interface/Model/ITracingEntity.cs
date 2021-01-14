@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdminLTE.Interface
 {
@@ -12,5 +8,7 @@ namespace AdminLTE.Interface
         DateTime CreatedDate { get; set; }
         string ModifiedUser { get; set; }
         DateTime ModifiedDate { get; set; }
+        bool IsDeleted { get; set; }
+        bool IsActive { get; set; }
     }
 }

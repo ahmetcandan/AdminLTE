@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AdminLTE.Model;
+using AdminLTE.Models;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using AdminLTE.Model;
-using AdminLTE.Models;
 
 namespace AdminLTE.Controllers
 {
