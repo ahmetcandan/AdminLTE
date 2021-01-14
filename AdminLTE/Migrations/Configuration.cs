@@ -1,10 +1,11 @@
-namespace AdminLTE.Migrations
+﻿namespace AdminLTE.Migrations
 {
     using AdminLTE.Model;
     using AdminLTE.Models;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -31,6 +32,75 @@ namespace AdminLTE.Migrations
 
         protected override void Seed(AdminLTE.DataAccess.DbModelContext context)
         {
+            #region Default Translation
+            var languageTR = context.TranslationLanguages.Add(new TranslationLanguage
+            {
+                Code = "TR",
+                Description = "Türkçe",
+                IsDeleted = false
+            });
+            var languageEN = context.TranslationLanguages.Add(new TranslationLanguage
+            {
+                Code = "EN",
+                Description = "English",
+                IsDeleted = false
+            });
+            List<TranslationWord> turkceWords = new List<TranslationWord>();
+            turkceWords.Add(new TranslationWord
+            {
+                TranslationLanguageId = languageTR.TranslationLanguageId,
+                Code = "del",
+                Description = "Sil"
+            });
+            turkceWords.Add(new TranslationWord
+            {
+                TranslationLanguageId = languageTR.TranslationLanguageId,
+                Code = "save",
+                Description = "Kaydet"
+            });
+            turkceWords.Add(new TranslationWord
+            {
+                TranslationLanguageId = languageTR.TranslationLanguageId,
+                Code = "cancel",
+                Description = "İptal"
+            });
+            turkceWords.Add(new TranslationWord
+            {
+                TranslationLanguageId = languageTR.TranslationLanguageId,
+                Code = "home",
+                Description = "Ana Sayfa"
+            });
+            context.TranslationWords.AddRange(turkceWords);
+
+            List<TranslationWord> englishWords = new List<TranslationWord>();
+            englishWords.Add(new TranslationWord
+            {
+                TranslationLanguageId = languageEN.TranslationLanguageId,
+                Code = "del",
+                Description = "Sil"
+            });
+            englishWords.Add(new TranslationWord
+            {
+                TranslationLanguageId = languageEN.TranslationLanguageId,
+                Code = "save",
+                Description = "Kaydet"
+            });
+            englishWords.Add(new TranslationWord
+            {
+                TranslationLanguageId = languageEN.TranslationLanguageId,
+                Code = "cancel",
+                Description = "İptal"
+            });
+            englishWords.Add(new TranslationWord
+            {
+                TranslationLanguageId = languageEN.TranslationLanguageId,
+                Code = "home",
+                Description = "Ana Sayfa"
+            });
+            context.TranslationWords.AddRange(englishWords);
+            #endregion
+
+            #region Default User / Role
             var adminRole = new Role
             {
                 Name = "Admin"
@@ -61,6 +131,7 @@ namespace AdminLTE.Migrations
             UserManager.Create(user, "User123!");
             UserManager.AddToRoles(admin.Id, adminRole.Name, userRole.Name);
             UserManager.AddToRoles(user.Id, userRole.Name);
+            #endregion
         }
     }
 }

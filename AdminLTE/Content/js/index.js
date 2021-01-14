@@ -96,7 +96,7 @@ function render(url, htmlid, success = undefined) {
                 if (xResponded.header !== undefined && xResponded.headers.location !== undefined)
                     window.location.href = xResponded.headers.location;
                 else
-                    window.location.href = window.location.origin + '/' + localStorage.language + '/Account/Login?ReturnUrl=' + (window.location.hash.startsWith('#') ? window.location.hash.substring(1) : window.location.hash);
+                    window.location.href = window.location.origin + '/' + localStorage.language.toLowerCase() + '/Account/Login?ReturnUrl=' + (window.location.hash.startsWith('#') ? window.location.hash.substring(1) : window.location.hash);
             }
         }
         $('#' + htmlid).removeClass('div-blur');
@@ -187,6 +187,7 @@ function closeModal(id = 'modal-popup') {
 
 function loginPostForm() {
     $('#loading').show();
+    debugger;
     $.post(window.location.origin + '/api/Account/Login/',
         {
             Email: $('#Email').val(),

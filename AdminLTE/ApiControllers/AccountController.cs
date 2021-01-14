@@ -31,6 +31,11 @@ namespace AdminLTE.ApiControllers
         private ApplicationUserManager _userManager;
         private ApplicationSignInManager _signInManager;
 
+        public AccountController()
+        {
+
+        }
+
         public AccountController(ApplicationUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {

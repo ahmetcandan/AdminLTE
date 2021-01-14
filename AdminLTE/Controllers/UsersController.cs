@@ -96,7 +96,7 @@ namespace AdminLTE.Controllers
                 UserName = user.UserName
             };
             var userRoles = await UserManager.GetRolesAsync(user.Id);
-            ViewBag.Roles = UnitOfWork.CredentialManager.GetAllRoles().ToList();
+            ViewBag.Roles = UnitOfWork.CredentialManager.GetAllRoles().Select(c => c.Name).ToList();
             result.Roles = (from c in userRoles
                             select new RoleView
                             {
