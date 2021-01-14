@@ -20,6 +20,7 @@ namespace AdminLTE.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            UnitOfWork.SetUser(this.User);
             if (filterContext.RequestContext.RouteData.Values["language"] != null)
             {
                 string languageCode = filterContext.RequestContext.RouteData.Values["language"].ToString().ToUpper();

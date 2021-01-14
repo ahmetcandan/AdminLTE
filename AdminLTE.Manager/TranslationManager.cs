@@ -4,12 +4,14 @@ using AdminLTE.Repository;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Principal;
 
 namespace AdminLTE.Manager
 {
     public class TranslationManager : ITranslationManager
     {
         private readonly DbContext context;
+        private IPrincipal User;
         ITranslationLanguageRepository TranslationLanguageRepository;
         ITranslationWordRepository TranslationWordRepository;
 
