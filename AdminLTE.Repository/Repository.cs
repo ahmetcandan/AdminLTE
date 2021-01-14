@@ -18,6 +18,12 @@ namespace AdminLTE.Repository
 
         public TEntity Add(TEntity entity)
         {
+            if (typeof(TEntity).GetInterfaces().Any(c => c == typeof(ITracingEntity)))
+            {
+                var tEntity = (ITracingEntity)entity;
+                tEntity.CreatedDate = DateTime.Now;
+                tEntity.CreatedUser = "system";
+            }
             return Context.Set<TEntity>().Add(entity);
         }
 
@@ -28,6 +34,12 @@ namespace AdminLTE.Repository
 
         public TEntity Update(TEntity entity)
         {
+            if (typeof(TEntity).GetInterfaces().Any(c => c == typeof(ITracingEntity)))
+            {
+                var tEntity = (ITracingEntity)entity;
+                tEntity.ModifiedDate = DateTime.Now;
+                tEntity.ModifiedUser = "system";
+            }
             Context.Set<TEntity>().Attach(entity);
             Context.Entry(entity).State = EntityState.Modified;
             return entity;

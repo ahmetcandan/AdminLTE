@@ -13,7 +13,7 @@ namespace AdminLTE.Model
         [Required]
         [StringLength(50)]
         public string ModifiedUser { get; set; }
-        public DateTime ModifiedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
     }

@@ -7,7 +7,7 @@ namespace AdminLTE.Model
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("KeyValue")]
-    public partial class KeyValue : IEntity
+    public partial class KeyValue : TracingModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public KeyValue()
@@ -33,21 +33,6 @@ namespace AdminLTE.Model
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string CreatedUser { get; set; }
-
-        public DateTime? ModifiedDate { get; set; }
-
-        [StringLength(50)]
-        public string ModifiedUser { get; set; }
-
-        public bool IsActive { get; set; }
-
-        public bool IsDeleted { get; set; }
 
         public virtual KeyType KeyType { get; set; }
     }

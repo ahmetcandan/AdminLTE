@@ -7,7 +7,7 @@ namespace AdminLTE.Interface
         string CreatedUser { get; set; }
         DateTime CreatedDate { get; set; }
         string ModifiedUser { get; set; }
-        DateTime ModifiedDate { get; set; }
+        DateTime? ModifiedDate { get; set; }
         bool IsDeleted { get; set; }
         bool IsActive { get; set; }
     }
