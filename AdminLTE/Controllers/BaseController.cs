@@ -8,11 +8,30 @@ namespace AdminLTE.Controllers
 {
     public class BaseController : Controller
     {
-        protected UnitOfWork UnitOfWork;
+        private UnitOfWork _unitOfWork;
+        private static object _lock;
+
+        protected UnitOfWork UnitOfWork 
+        {
+            get 
+            {
+                if (_unitOfWork == null)
+                {
+                    if (_unitOfWork == null)
+                        return new UnitOfWork(new DbModelContext(), User);
+                    //lock (_lock)
+                    //{
+                    //    if (_unitOfWork == null)
+                    //        return new UnitOfWork(new DbModelContext());
+
+                    //}
+                }
+                return _unitOfWork;
+            } 
+        }
 
         public BaseController()
         {
-            UnitOfWork = new UnitOfWork(new DbModelContext());
         }
 
         private readonly static Dictionary<string, string> _translate = new Dictionary<string, string>();
@@ -20,7 +39,6 @@ namespace AdminLTE.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            UnitOfWork.SetUser(this.User);
             if (filterContext.RequestContext.RouteData.Values["language"] != null)
             {
                 string languageCode = filterContext.RequestContext.RouteData.Values["language"].ToString().ToUpper();

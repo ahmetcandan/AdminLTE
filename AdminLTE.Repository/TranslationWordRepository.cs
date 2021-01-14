@@ -3,12 +3,13 @@ using AdminLTE.Model;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Principal;
 
 namespace AdminLTE.Repository
 {
     public class TranslationWordRepository : Repository<TranslationWord>, ITranslationWordRepository
     {
-        public TranslationWordRepository(DbContext context) : base(context)
+        public TranslationWordRepository(DbContext context, IPrincipal user) : base(context, user)
         {
         }
 

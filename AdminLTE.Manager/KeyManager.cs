@@ -1,23 +1,27 @@
 ﻿using AdminLTE.Core;
 using AdminLTE.Model;
 using AdminLTE.Repository;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Principal;
 
 namespace AdminLTE.Manager
 {
     public class KeyManager : IKeyManager
     {
-        private readonly DbContext context;
+        private readonly DbContext Context;
+        private readonly IPrincipal User;
         IKeyValueRepository KeyValueRepository;
         IKeyTypeRepository KeyTypeRepository;
 
-        public KeyManager(DbContext context)
+        public KeyManager(DbContext context, IPrincipal user)
         {
-            this.context = context;
-            KeyValueRepository = new KeyValueRepository(context);
-            KeyTypeRepository = new KeyTypeRepository(context);
+            Context = context;
+            User = user;
+            KeyValueRepository = new KeyValueRepository(context, user);
+            KeyTypeRepository = new KeyTypeRepository(context, user);
         }
 
         public KeyType GetKeyType(int keyTypeId)
@@ -43,42 +47,42 @@ namespace AdminLTE.Manager
         public KeyValue AddKeyValue(KeyValue keyValue)
         {
             var result = KeyValueRepository.Add(keyValue);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
 
         public KeyValue UpdateKeyValue(KeyValue keyValue)
         {
             var result = KeyValueRepository.Update(keyValue);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
 
         public KeyValue DeleteKeyValue(KeyValue keyValue)
         {
             var result = KeyValueRepository.Remove(keyValue);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
 
         public KeyType AddKeyType(KeyType keyType)
         {
             var result = KeyTypeRepository.Add(keyType);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
 
         public KeyType UpdateKeyType(KeyType keyType)
         {
             var result = KeyTypeRepository.Update(keyType);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
 
         public KeyType DeleteKeyType(KeyType keyType)
         {
             var result = KeyTypeRepository.Remove(keyType);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
     }

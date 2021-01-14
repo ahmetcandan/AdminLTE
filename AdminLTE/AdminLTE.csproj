@@ -320,12 +320,12 @@
     <Compile Include="Controllers\TranslationLanguagesController.cs" />
     <Compile Include="Controllers\TranslationWordsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Helper\BaseController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Helper\SignalRHub.cs" />
-    <Compile Include="Migrations\202101132003519_FirstMigrations.cs" />
-    <Compile Include="Migrations\202101132003519_FirstMigrations.Designer.cs">
-      <DependentUpon>202101132003519_FirstMigrations.cs</DependentUpon>
+    <Compile Include="Migrations\202101141822323_FirstMigratin.cs" />
+    <Compile Include="Migrations\202101141822323_FirstMigratin.Designer.cs">
+      <DependentUpon>202101141822323_FirstMigratin.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountApiBindingModels.cs" />
@@ -499,8 +499,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202101132003519_FirstMigrations.resx">
-      <DependentUpon>202101132003519_FirstMigrations.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202101141822323_FirstMigratin.resx">
+      <DependentUpon>202101141822323_FirstMigratin.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

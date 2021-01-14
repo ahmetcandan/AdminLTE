@@ -7,7 +7,6 @@ namespace AdminLTE.Core
     {
         ITranslationManager TranslationManager { get; }
         IKeyManager KeyManager { get; }
-        void SetUser(IPrincipal user);
 
         int Complate();
     }

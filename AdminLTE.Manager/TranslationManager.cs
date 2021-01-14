@@ -10,16 +10,17 @@ namespace AdminLTE.Manager
 {
     public class TranslationManager : ITranslationManager
     {
-        private readonly DbContext context;
-        private IPrincipal User;
+        private readonly DbContext Context;
+        private readonly IPrincipal User;
         ITranslationLanguageRepository TranslationLanguageRepository;
         ITranslationWordRepository TranslationWordRepository;
 
-        public TranslationManager(DbContext context)
+        public TranslationManager(DbContext context, IPrincipal user)
         {
-            this.context = context;
-            TranslationLanguageRepository = new TranslationLanguageRepository(context);
-            TranslationWordRepository = new TranslationWordRepository(context);
+            Context = context;
+            User = user;
+            TranslationLanguageRepository = new TranslationLanguageRepository(context, user);
+            TranslationWordRepository = new TranslationWordRepository(context, user);
         }
 
         public IEnumerable<TranslationLanguage> GetTranslationLanguages()
@@ -35,42 +36,42 @@ namespace AdminLTE.Manager
         public TranslationWord AddTranslationWord(TranslationWord translationWord)
         {
             var result = TranslationWordRepository.Add(translationWord);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
 
         public TranslationWord UpdateTranslationWork(TranslationWord translationWord)
         {
             var result = TranslationWordRepository.Update(translationWord);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
 
         public TranslationWord DeleteTranslationWord(TranslationWord translationWord)
         {
             var result = TranslationWordRepository.Remove(translationWord);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
 
         public TranslationLanguage AddTranslationLanguage(TranslationLanguage translationLanguage)
         {
             var result = TranslationLanguageRepository.Add(translationLanguage);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
 
         public TranslationLanguage UpdateTranslationLanguage(TranslationLanguage translationLanguage)
         {
             var result = TranslationLanguageRepository.Update(translationLanguage);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
 
         public TranslationLanguage DeleteTranslationLanguage(TranslationLanguage translationLanguage)
         {
             var result = TranslationLanguageRepository.Remove(translationLanguage);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
 

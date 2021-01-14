@@ -10,7 +10,6 @@ namespace AdminLTE.Model
         [StringLength(50)]
         public string CreatedUser { get; set; }
         public DateTime CreatedDate { get; set; }
-        [Required]
         [StringLength(50)]
         public string ModifiedUser { get; set; }
         public DateTime? ModifiedDate { get; set; }

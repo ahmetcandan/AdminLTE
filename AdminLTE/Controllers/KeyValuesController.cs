@@ -60,16 +60,13 @@ namespace AdminLTE.Controllers
             if (ModelState.IsValid)
             {
                 var keyValue = new KeyValue();
-                keyValue.CreatedDate = DateTime.Now;
-                keyValue.CreatedUser = User.Identity.Name;
                 keyValue.Description = instance.Description;
                 keyValue.EndDate = instance.EndDate;
-                keyValue.IsActive = true;
-                keyValue.IsDeleted = false;
                 keyValue.Key = instance.Key;
                 keyValue.KeyTypeId = instance.KeyTypeId;
                 keyValue.StartDate = instance.StartDate;
                 keyValue.Value = instance.Value;
+                keyValue.IsActive = true;
                 UnitOfWork.KeyManager.AddKeyValue(keyValue);
                 return PartialView(instance);
             }
@@ -119,12 +116,8 @@ namespace AdminLTE.Controllers
             if (ModelState.IsValid)
             {
                 var keyValue = UnitOfWork.KeyManager.GetKeyValue(instance.KeyValueId);
-                keyValue.ModifiedDate = DateTime.Now;
-                keyValue.ModifiedUser = User.Identity.Name;
                 keyValue.Description = instance.Description;
                 keyValue.EndDate = instance.EndDate;
-                keyValue.IsActive = true;
-                keyValue.IsDeleted = false;
                 keyValue.Key = instance.Key;
                 keyValue.KeyTypeId = instance.KeyTypeId;
                 keyValue.StartDate = instance.StartDate;

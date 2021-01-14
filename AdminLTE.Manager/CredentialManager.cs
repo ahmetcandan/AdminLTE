@@ -4,33 +4,36 @@ using AdminLTE.Repository;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Principal;
 
 namespace AdminLTE.Manager
 {
     public class CredentialManager : ICredentialManager
     {
-        private readonly DbContext context;
+        private readonly DbContext Context;
+        private readonly IPrincipal User;
         IUserRepository UserRepository;
         IRoleRepository RoleRepository;
 
-        public CredentialManager(DbContext context)
+        public CredentialManager(DbContext context, IPrincipal user)
         {
-            this.context = context;
-            UserRepository = new UserRepository(context);
-            RoleRepository = new RoleRepository(context);
+            Context = context;
+            User = user;
+            UserRepository = new UserRepository(context, user);
+            RoleRepository = new RoleRepository(context, user);
         }
 
         public Role AddRole(Role role)
         {
             var result = RoleRepository.Add(role);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
 
         public Role DeleteRole(Role role)
         {
             var result = RoleRepository.Remove(role);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
 
@@ -57,7 +60,7 @@ namespace AdminLTE.Manager
         public Role UpdateRole(Role role)
         {
             var result = RoleRepository.Update(role);
-            context.SaveChanges();
+            Context.SaveChanges();
             return result;
         }
 

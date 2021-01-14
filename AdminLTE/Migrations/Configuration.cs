@@ -31,14 +31,17 @@
         protected override void Seed(AdminLTE.DataAccess.DbModelContext context)
         {
             #region Default Translation
+            
             var languageTR = context.TranslationLanguages.Add(new TranslationLanguage
             {
+                TranslationLanguageId = 1,
                 Code = "TR",
                 Description = "Türkçe",
                 IsDeleted = false
             });
             var languageEN = context.TranslationLanguages.Add(new TranslationLanguage
             {
+                TranslationLanguageId = 2,
                 Code = "EN",
                 Description = "English",
                 IsDeleted = false

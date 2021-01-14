@@ -7,13 +7,13 @@ namespace AdminLTE.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class FirstMigrations : IMigrationMetadata
+    public sealed partial class FirstMigratin : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FirstMigrations));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(FirstMigratin));
         
         string IMigrationMetadata.Id
         {
-            get { return "202101132003519_FirstMigrations"; }
+            get { return "202101141822323_FirstMigratin"; }
         }
         
         string IMigrationMetadata.Source

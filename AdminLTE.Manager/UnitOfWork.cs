@@ -6,20 +6,16 @@ namespace AdminLTE.Manager
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly DbContext context;
+        private readonly DbContext Context;
         private IPrincipal User;
 
-        public UnitOfWork(DbContext context)
+        public UnitOfWork(DbContext context, IPrincipal user)
         {
-            this.context = context;
-            TranslationManager = new TranslationManager(this.context);
-            KeyManager = new KeyManager(this.context);
-            CredentialManager = new CredentialManager(this.context);
-        }
-
-        public void SetUser(IPrincipal user)
-        {
-            this.User = user;
+            Context = context;
+            User = user;
+            TranslationManager = new TranslationManager(Context, User);
+            KeyManager = new KeyManager(Context, User);
+            CredentialManager = new CredentialManager(Context, User);
         }
 
         public ITranslationManager TranslationManager { get; private set; }
@@ -28,12 +24,12 @@ namespace AdminLTE.Manager
 
         public int Complate()
         {
-            return context.SaveChanges();
+            return Context.SaveChanges();
         }
 
         public void Dispose()
         {
-            context.Dispose();
+            Context.Dispose();
         }
     }
 }
