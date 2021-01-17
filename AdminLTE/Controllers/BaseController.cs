@@ -13,19 +13,10 @@ namespace AdminLTE.Controllers
 
         protected UnitOfWork UnitOfWork 
         {
-            get 
+            get
             {
                 if (_unitOfWork == null)
-                {
-                    if (_unitOfWork == null)
-                        return new UnitOfWork(new DbModelContext(), User);
-                    //lock (_lock)
-                    //{
-                    //    if (_unitOfWork == null)
-                    //        return new UnitOfWork(new DbModelContext());
-
-                    //}
-                }
+                    _unitOfWork = new UnitOfWork(DbModelContext.Create(), User);
                 return _unitOfWork;
             } 
         }
@@ -80,6 +71,16 @@ namespace AdminLTE.Controllers
             hubProxy.Invoke("SendNotification", userName, message, "error").Wait();
 
             base.OnException(filterContext);
+        }
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                //UnitOfWork.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

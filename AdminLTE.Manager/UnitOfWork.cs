@@ -8,19 +8,45 @@ namespace AdminLTE.Manager
     {
         private readonly DbContext Context;
         private IPrincipal User;
+        private ITranslationManager _translationManager;
+        private IKeyManager _keyManager;
+        private ICredentialManager _credentialManager;
+
+        public ITranslationManager TranslationManager
+        {
+            get
+            {
+                if (_translationManager == null)
+                    _translationManager = new TranslationManager(Context, User);
+                return _translationManager;
+            }
+        }
+
+        public IKeyManager KeyManager
+        {
+            get
+            {
+                if (_keyManager == null)
+                    _keyManager = new KeyManager(Context, User);
+                return _keyManager;
+            }
+        }
+
+        public ICredentialManager CredentialManager
+        {
+            get
+            {
+                if (_credentialManager == null)
+                    _credentialManager = new CredentialManager(Context, User);
+                return _credentialManager;
+            }
+        }
 
         public UnitOfWork(DbContext context, IPrincipal user)
         {
             Context = context;
             User = user;
-            TranslationManager = new TranslationManager(Context, User);
-            KeyManager = new KeyManager(Context, User);
-            CredentialManager = new CredentialManager(Context, User);
         }
-
-        public ITranslationManager TranslationManager { get; private set; }
-        public IKeyManager KeyManager { get; private set; }
-        public ICredentialManager CredentialManager { get; private set; }
 
         public int Complate()
         {

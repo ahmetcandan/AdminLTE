@@ -46,15 +46,23 @@ namespace AdminLTE.Repository
 
         public TEntity Update(TEntity entity)
         {
-            if (typeof(TEntity).GetInterfaces().Any(c => c == typeof(ITracingEntity)))
+            try
             {
-                var tEntity = (ITracingEntity)entity;
-                tEntity.ModifiedDate = DateTime.Now;
-                tEntity.ModifiedUser = User.Identity.Name;
+                if (typeof(TEntity).GetInterfaces().Any(c => c == typeof(ITracingEntity)))
+                {
+                    var tEntity = (ITracingEntity)entity;
+                    tEntity.ModifiedDate = DateTime.Now;
+                    tEntity.ModifiedUser = User.Identity.Name;
+                }
+                Context.Set<TEntity>().Attach(entity);
+                Context.Entry(entity).State = EntityState.Modified;
+                return entity;
             }
-            Context.Set<TEntity>().Attach(entity);
-            Context.Entry(entity).State = EntityState.Modified;
-            return entity;
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)

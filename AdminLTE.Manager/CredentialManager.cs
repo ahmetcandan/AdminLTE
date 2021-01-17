@@ -12,15 +12,33 @@ namespace AdminLTE.Manager
     {
         private readonly DbContext Context;
         private readonly IPrincipal User;
-        IUserRepository UserRepository;
-        IRoleRepository RoleRepository;
+        private IUserRepository _userRepository;
+        private IRoleRepository _roleRepository;
+
+        IUserRepository UserRepository
+        {
+            get
+            {
+                if (_userRepository == null)
+                    _userRepository = new UserRepository(Context, User);
+                return _userRepository;
+            }
+        }
+
+        IRoleRepository RoleRepository
+        {
+            get
+            {
+                if (_roleRepository == null)
+                    _roleRepository = new RoleRepository(Context, User);
+                return _roleRepository;
+            }
+        }
 
         public CredentialManager(DbContext context, IPrincipal user)
         {
             Context = context;
             User = user;
-            UserRepository = new UserRepository(context, user);
-            RoleRepository = new RoleRepository(context, user);
         }
 
         public Role AddRole(Role role)

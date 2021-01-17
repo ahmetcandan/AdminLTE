@@ -183,14 +183,5 @@ namespace AdminLTE.Controllers
                 }
             });
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                UnitOfWork.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

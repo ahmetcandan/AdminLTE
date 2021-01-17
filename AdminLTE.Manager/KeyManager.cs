@@ -13,15 +13,33 @@ namespace AdminLTE.Manager
     {
         private readonly DbContext Context;
         private readonly IPrincipal User;
-        IKeyValueRepository KeyValueRepository;
-        IKeyTypeRepository KeyTypeRepository;
+        private IKeyValueRepository _keyValueRepository;
+        private IKeyTypeRepository _keyTypeRepository;
+
+        IKeyValueRepository KeyValueRepository
+        {
+            get
+            {
+                if (_keyValueRepository == null)
+                    _keyValueRepository = new KeyValueRepository(Context, User);
+                return _keyValueRepository;
+            }
+        }
+
+        IKeyTypeRepository KeyTypeRepository
+        {
+            get
+            {
+                if (_keyTypeRepository == null)
+                    _keyTypeRepository = new KeyTypeRepository(Context, User);
+                return _keyTypeRepository;
+            }
+        }
 
         public KeyManager(DbContext context, IPrincipal user)
         {
             Context = context;
             User = user;
-            KeyValueRepository = new KeyValueRepository(context, user);
-            KeyTypeRepository = new KeyTypeRepository(context, user);
         }
 
         public KeyType GetKeyType(int keyTypeId)

@@ -48,7 +48,6 @@ namespace AdminLTE.Controllers
                 keyType.Description = instance.Description;
                 keyType.IsDeleted = false;
                 UnitOfWork.KeyManager.AddKeyType(keyType);
-                UnitOfWork.Complate();
                 return PartialView(keyType);
             }
 
@@ -139,15 +138,5 @@ namespace AdminLTE.Controllers
                 KeyTypeId = keyType.KeyTypeId
             });
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                UnitOfWork.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
     }
 }

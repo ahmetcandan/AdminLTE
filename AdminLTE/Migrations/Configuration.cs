@@ -20,7 +20,7 @@
         {
             get
             {
-                return _userManager ?? new ApplicationUserManager(new UserStore<User>(new AdminLTE.DataAccess.DbModelContext()));
+                return _userManager ?? new ApplicationUserManager(new UserStore<User>(AdminLTE.DataAccess.DbModelContext.Create()));
             }
             private set
             {

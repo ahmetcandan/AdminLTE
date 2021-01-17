@@ -12,15 +12,33 @@ namespace AdminLTE.Manager
     {
         private readonly DbContext Context;
         private readonly IPrincipal User;
-        ITranslationLanguageRepository TranslationLanguageRepository;
-        ITranslationWordRepository TranslationWordRepository;
+        private ITranslationLanguageRepository _translationLanguageRepository;
+        private ITranslationWordRepository _translationWordRepository;
+
+        ITranslationLanguageRepository TranslationLanguageRepository 
+        {
+            get
+            {
+                if (_translationLanguageRepository == null)
+                    _translationLanguageRepository = new TranslationLanguageRepository(Context, User);
+                return _translationLanguageRepository;
+            }
+        }
+
+        ITranslationWordRepository TranslationWordRepository
+        {
+            get
+            {
+                if (_translationWordRepository == null)
+                    _translationWordRepository = new TranslationWordRepository(Context, User);
+                return _translationWordRepository;
+            }
+        }
 
         public TranslationManager(DbContext context, IPrincipal user)
         {
             Context = context;
             User = user;
-            TranslationLanguageRepository = new TranslationLanguageRepository(context, user);
-            TranslationWordRepository = new TranslationWordRepository(context, user);
         }
 
         public IEnumerable<TranslationLanguage> GetTranslationLanguages()

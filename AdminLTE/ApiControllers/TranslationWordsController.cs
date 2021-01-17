@@ -24,14 +24,5 @@ namespace AdminLTE.ApiControllers
                           }).ToList();
             return Ok(result);
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                UnitOfWork.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

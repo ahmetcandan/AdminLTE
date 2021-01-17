@@ -6,7 +6,7 @@ namespace AdminLTE.DataAccess
 {
     public class DbModelContext : IdentityDbContext<User>
     {
-        public DbModelContext()
+        private DbModelContext()
             : base("name=DefaultConnection")
         {
 

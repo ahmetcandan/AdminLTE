@@ -146,14 +146,5 @@ namespace AdminLTE.Controllers
                 TranslationLanguageId = translationWord.TranslationLanguageId
             });
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                UnitOfWork.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

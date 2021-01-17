@@ -14,16 +14,7 @@ namespace AdminLTE.ApiControllers
             get
             {
                 if (_unitOfWork == null)
-                {
-                    if (_unitOfWork == null)
-                        return new UnitOfWork(new DbModelContext(), User);
-                    //lock (_lock)
-                    //{
-                    //    if (_unitOfWork == null)
-                    //        return new UnitOfWork(new DbModelContext());
-
-                    //}
-                }
+                    return new UnitOfWork(DbModelContext.Create(), User);
                 return _unitOfWork;
             }
         }
@@ -31,6 +22,15 @@ namespace AdminLTE.ApiControllers
         public BaseApiController()
         {
 
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                //UnitOfWork.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
