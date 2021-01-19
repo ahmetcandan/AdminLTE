@@ -1,4 +1,5 @@
-﻿using AdminLTE.DataAccess;
+﻿using AdminLTE.Core;
+using AdminLTE.DataAccess;
 using AdminLTE.Manager;
 using System.Web.Http;
 
@@ -6,22 +7,19 @@ namespace AdminLTE.ApiControllers
 {
     public class BaseApiController : ApiController
     {
-        private UnitOfWork _unitOfWork;
-        private static object _lock;
+        private IUnitOfWork _unitOfWork;
 
-        protected UnitOfWork UnitOfWork
+        protected IUnitOfWork UnitOfWork
         {
             get
             {
-                if (_unitOfWork == null)
-                    return new UnitOfWork(DbModelContext.Create(), User);
                 return _unitOfWork;
             }
         }
 
-        public BaseApiController()
+        public BaseApiController(IUnitOfWork unitOfWork)
         {
-
+            _unitOfWork = unitOfWork;
         }
 
         protected override void Dispose(bool disposing)

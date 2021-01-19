@@ -1,4 +1,5 @@
-﻿using AdminLTE.Model;
+﻿using AdminLTE.Core;
+using AdminLTE.Model;
 using AdminLTE.Models;
 using System.Linq;
 using System.Web.Mvc;
@@ -8,6 +9,11 @@ namespace AdminLTE.Controllers
     [Authorize(Roles = "Admin")]
     public class RolesController : BaseController
     {
+        public RolesController(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
+        {
+        }
+
         public ActionResult Index()
         {
             return PartialView();

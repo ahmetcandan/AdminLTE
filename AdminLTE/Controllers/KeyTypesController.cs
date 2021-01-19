@@ -1,4 +1,5 @@
-﻿using AdminLTE.Model;
+﻿using AdminLTE.Core;
+using AdminLTE.Model;
 using AdminLTE.Models;
 using System.Data;
 using System.Linq;
@@ -10,6 +11,11 @@ namespace AdminLTE.Controllers
     [System.Web.Mvc.Authorize(Roles = "Admin,User")]
     public class KeyTypesController : BaseController
     {
+        public KeyTypesController(IUnitOfWork unitOfWork) 
+            : base(unitOfWork)
+        {
+        }
+
         public ActionResult Index()
         {
             return PartialView();

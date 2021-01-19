@@ -1,4 +1,5 @@
-﻿using AdminLTE.Models;
+﻿using AdminLTE.Core;
+using AdminLTE.Models;
 using Microsoft.AspNet.Identity.Owin;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,11 @@ namespace AdminLTE.Controllers
     [Authorize(Roles = "Admin")]
     public class UsersController : BaseController
     {
+        public UsersController(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
+        {
+        }
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -35,17 +41,6 @@ namespace AdminLTE.Controllers
             {
                 _userManager = value;
             }
-        }
-
-        public UsersController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
-        public UsersController()
-        {
-
         }
 
         public ActionResult Index()
@@ -112,15 +107,6 @@ namespace AdminLTE.Controllers
             await UserManager.RemoveFromRolesAsync(user.Id, currentRoles.Where(c => !requestRoles.Any(r => r == c)).ToArray());
             await UserManager.AddToRolesAsync(user.Id, requestRoles.Where(r => !currentRoles.Any(c => c == r)).ToArray());
             return PartialView(user);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                UnitOfWork.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

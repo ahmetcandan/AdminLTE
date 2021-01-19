@@ -1,4 +1,5 @@
-﻿using AdminLTE.Manager;
+﻿using AdminLTE.Core;
+using AdminLTE.Manager;
 using AdminLTE.Models;
 using AdminLTE.Providers;
 using AdminLTE.Results;
@@ -28,16 +29,10 @@ namespace AdminLTE.ApiControllers
         private ApplicationUserManager _userManager;
         private ApplicationSignInManager _signInManager;
 
-        public AccountController()
+        public AccountController(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
 
-        }
-
-        public AccountController(ApplicationUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
-        {
-            UserManager = userManager;
-            AccessTokenFormat = accessTokenFormat;
         }
 
         //

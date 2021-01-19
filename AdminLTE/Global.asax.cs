@@ -1,7 +1,13 @@
 ﻿using AdminLTE.Controllers;
+using AdminLTE.Core;
+using AdminLTE.DataAccess;
+using AdminLTE.Manager;
+using LightInject;
 using NLog;
 using System;
+using System.Data.Entity;
 using System.Net;
+using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -18,11 +24,20 @@ namespace AdminLTE
         {
             Log.Info("Starting up...");
 
+
+            var container = new ServiceContainer();
+            container.EnableMvc();
+            container.RegisterControllers(Assembly.GetExecutingAssembly());
+            container.RegisterInstance(typeof(DbContext), DbModelContext.Create());
+            container.Register<IUnitOfWork, UnitOfWork>();
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //ControllerBuilder.Current.SetControllerFactory(new LightInjectDefaultControllerFactory());
 
             Log.Info("Routes and bundles registered");
             Log.Info("Started");

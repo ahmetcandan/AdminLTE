@@ -83,6 +83,8 @@ namespace AdminLTE
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+            // SignalR
             app.MapSignalR();
         }
     }

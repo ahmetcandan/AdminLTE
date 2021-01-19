@@ -1,4 +1,5 @@
-﻿using AdminLTE.Models;
+﻿using AdminLTE.Core;
+using AdminLTE.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -10,14 +11,10 @@ using System.Web.Mvc;
 namespace AdminLTE.Controllers
 {
     [Authorize]
-    public class AccountController : BaseController
+    public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
-        public AccountController()
-        {
-        }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {

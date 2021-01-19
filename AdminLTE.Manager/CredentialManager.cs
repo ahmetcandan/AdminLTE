@@ -57,12 +57,29 @@ namespace AdminLTE.Manager
 
         public IEnumerable<Role> GetAllRoles()
         {
-            return RoleRepository.GetAll().ToList();
+            try
+            {
+                var result = RoleRepository.GetAll().ToList();
+                return result;
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
         }
 
         public IEnumerable<User> GetAllUser()
         {
-            return UserRepository.GetAll().ToList();
+            try
+            {
+                var result = UserRepository.GetAll().ToList();
+                return result;
+            }
+            catch (System.Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public User GetUser(string id)

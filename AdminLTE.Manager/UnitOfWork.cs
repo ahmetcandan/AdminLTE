@@ -42,10 +42,9 @@ namespace AdminLTE.Manager
             }
         }
 
-        public UnitOfWork(DbContext context, IPrincipal user)
+        public UnitOfWork(DbContext context)
         {
             Context = context;
-            User = user;
         }
 
         public int Complate()
@@ -56,6 +55,11 @@ namespace AdminLTE.Manager
         public void Dispose()
         {
             Context.Dispose();
+        }
+
+        public void SetUser(IPrincipal user)
+        {
+            User = user;
         }
     }
 }

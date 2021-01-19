@@ -1,8 +1,9 @@
-﻿using System.Web.Mvc;
+﻿using AdminLTE.Core;
+using System.Web.Mvc;
 
 namespace AdminLTE.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         [HttpGet]
         public ActionResult Index()

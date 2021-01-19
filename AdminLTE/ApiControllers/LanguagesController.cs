@@ -1,4 +1,5 @@
-﻿using AdminLTE.Models;
+﻿using AdminLTE.Core;
+using AdminLTE.Models;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,6 +10,10 @@ namespace AdminLTE.ApiControllers
 {
     public class LanguagesController : BaseApiController
     {
+        public LanguagesController(IUnitOfWork unitOfWork) 
+            : base(unitOfWork)
+        {
+        }
 
         // GET: api/Languages
         [HttpGet]

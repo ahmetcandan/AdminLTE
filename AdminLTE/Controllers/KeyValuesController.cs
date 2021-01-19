@@ -1,4 +1,5 @@
-﻿using AdminLTE.Model;
+﻿using AdminLTE.Core;
+using AdminLTE.Model;
 using AdminLTE.Models;
 using System;
 using System.Data;
@@ -11,6 +12,11 @@ namespace AdminLTE.Controllers
     [Authorize(Roles = "Admin,User")]
     public class KeyValuesController : BaseController
     {
+        public KeyValuesController(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
+        {
+        }
+
         // GET: Index
         public ActionResult Index()
         {

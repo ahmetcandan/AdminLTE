@@ -1,4 +1,5 @@
-﻿using AdminLTE.Model;
+﻿using AdminLTE.Core;
+using AdminLTE.Model;
 using AdminLTE.Models;
 using System.Data;
 using System.Linq;
@@ -10,6 +11,11 @@ namespace AdminLTE.Controllers
     [Authorize(Roles = "Admin")]
     public class TranslationWordsController : BaseController
     {
+        public TranslationWordsController(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
+        {
+        }
+
         // GET: TranslationWords
         public ActionResult Index()
         {

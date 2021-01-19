@@ -1,4 +1,5 @@
-﻿using AdminLTE.Models;
+﻿using AdminLTE.Core;
+using AdminLTE.Models;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -9,6 +10,11 @@ namespace AdminLTE.ApiControllers
 {
     public class TranslationWordsController : BaseApiController
     {
+        public TranslationWordsController(IUnitOfWork unitOfWork) 
+            : base(unitOfWork)
+        {
+        }
+
         // GET: api/TranslationWords/TR
         [HttpGet]
         [ResponseType(typeof(IList<TranslationWordView>))]

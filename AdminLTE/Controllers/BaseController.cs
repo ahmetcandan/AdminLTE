@@ -1,28 +1,29 @@
-﻿using AdminLTE.DataAccess;
-using AdminLTE.Manager;
+﻿using AdminLTE.Core;
 using Microsoft.AspNet.SignalR.Client;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using LightInject;
+using AdminLTE.DataAccess;
+using AdminLTE.Manager;
+using System;
 
 namespace AdminLTE.Controllers
 {
     public class BaseController : Controller
     {
-        private UnitOfWork _unitOfWork;
-        private static object _lock;
+        private IUnitOfWork _unitOfWork;
 
-        protected UnitOfWork UnitOfWork 
+        protected IUnitOfWork UnitOfWork
         {
             get
             {
-                if (_unitOfWork == null)
-                    _unitOfWork = new UnitOfWork(DbModelContext.Create(), User);
                 return _unitOfWork;
-            } 
+            }
         }
 
-        public BaseController()
+        public BaseController(IUnitOfWork unitOfWork)
         {
+            _unitOfWork = unitOfWork;
         }
 
         private readonly static Dictionary<string, string> _translate = new Dictionary<string, string>();
@@ -30,6 +31,7 @@ namespace AdminLTE.Controllers
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            _unitOfWork.SetUser(filterContext.HttpContext.User);
             if (filterContext.RequestContext.RouteData.Values["language"] != null)
             {
                 string languageCode = filterContext.RequestContext.RouteData.Values["language"].ToString().ToUpper();
