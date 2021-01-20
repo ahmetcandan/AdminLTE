@@ -1,9 +1,11 @@
 ﻿using AdminLTE.Core;
 using AdminLTE.Model;
 using AdminLTE.Models;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
+using System.Web.Http.Description;
 using System.Web.Mvc;
 
 namespace AdminLTE.Controllers
@@ -32,6 +34,21 @@ namespace AdminLTE.Controllers
                               TranslationLanguageId = c.TranslationLanguageId
                           }).ToList();
             return PartialView(result);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [ResponseType(typeof(IList<TranslationLanguageView>))]
+        public JsonResult Languages()
+        {
+            var result = (from l in UnitOfWork.TranslationManager.GetTranslationLanguages()
+                          select new TranslationLanguageView
+                          {
+                              Code = l.Code,
+                              Description = l.Description,
+                              TranslationLanguageId = l.TranslationLanguageId
+                          }).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         // GET: TranslationLanguages/Create

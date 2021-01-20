@@ -3,23 +3,25 @@ using AdminLTE.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http.Description;
 using System.Web.Mvc;
 
 namespace AdminLTE.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(IUnitOfWork unitOfWork)
+            : base(unitOfWork)
         {
-            UserManager = userManager;
-            SignInManager = signInManager;
+
         }
 
         public ApplicationSignInManager SignInManager
@@ -43,6 +45,46 @@ namespace AdminLTE.Controllers
             private set
             {
                 _userManager = value;
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ResponseType(typeof(LoginResponse))]
+        public async Task<JsonResult> LoginApi(LoginViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return null;
+                }
+
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, change to shouldLockout: true
+                var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        LoginResponseViewModel response = new LoginResponseViewModel();
+                        response.Email = model.Email;
+                        var user = UnitOfWork.CredentialManager.GetUserForUserName(model.Email);
+                        response.UserName = user.UserName;
+                        response.Roles = await UserManager.GetRolesAsync(user.Id);
+                        return Json(new LoginResponse() { Code = 200, Message = "Sussess.", User = response }, JsonRequestBehavior.AllowGet);
+                    case SignInStatus.LockedOut:
+                        return null;
+                    case SignInStatus.RequiresVerification:
+                        return null;
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return Json(new LoginResponse() { Code = 501, Message = "Invalid login attempt.", User = null }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new LoginResponse() { Code = 502, Message = "Exception.", User = null }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -473,5 +515,12 @@ namespace AdminLTE.Controllers
             }
         }
         #endregion
+    }
+
+    public class LoginResponse
+    {
+        public LoginResponseViewModel User { get; set; }
+        public string Message { get; set; }
+        public int Code { get; set; }
     }
 }

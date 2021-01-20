@@ -187,8 +187,14 @@ function closeModal(id = 'modal-popup') {
 
 function loginPostForm() {
     $('#loading').show();
-    debugger;
-    $.post(window.location.origin + '/api/Account/Login/',
+    let languageCode = localStorage.language;
+    if (window.location.pathname.split('/').length > 2)
+        languageCode = window.location.pathname.split('/')[1];
+    else if (localStorage.language)
+        languageCode = localStorage.language;
+    else
+        languageCode = 'tr';
+    $.post(window.location.origin + '/' + languageCode + '/Account/LoginApi/',
         {
             Email: $('#Email').val(),
             Password: $('#Password').val()
@@ -198,13 +204,6 @@ function loginPostForm() {
             User.Roles = data.Roles;
             localStorage.removeItem('User');
             localStorage.setItem('User', JSON.stringify(User));
-            let languageCode = localStorage.language;
-            if (window.location.pathname.split('/').length > 2)
-                languageCode = window.location.pathname.split('/')[1];
-            else if (localStorage.language)
-                languageCode = localStorage.language;
-            else
-                languageCode = 'tr';
             localStorage.setItem('language', languageCode.toUpperCase());
             window.location.href = window.location.origin + '/' + languageCode.toLowerCase() + '#' + getUrlParameter('ReturnUrl');
             loadTranslate();
@@ -273,7 +272,8 @@ function setTranslateWords() {
     let languageCode = localStorage.getItem('language');
     if (languageCode === null || languageCode === undefined || languageCode === 'null' || languageCode === 'undefined')
         languageCode = 'TR';
-    $.get(window.location.origin + '/api/TranslationWords/' + languageCode, null, function (data) {
+    $.get(window.location.origin + '/' + languageCode + '/TranslationWords/GetTranslationWord/' + languageCode, null, function (data) {
+        debugger;
         localStorage.removeItem('translateKeys');
         localStorage.setItem('translateKeys', JSON.stringify(data));
         loadTranslate();
@@ -281,7 +281,7 @@ function setTranslateWords() {
 }
 
 function setLanguages() {
-    $.get(window.location.origin + '/api/Languages', null, function (data) {
+    $.get(window.location.origin + '/' + languageCode + '/Languages', null, function (data) {
         localStorage.removeItem('languages');
         localStorage.setItem('languages', JSON.stringify(data));
         loadTranslate();
@@ -303,6 +303,7 @@ function translate(code) {
     if (localStorage.translateKeys === null || localStorage.translateKeys === undefined || localStorage.translateKeys.length === 0)
         return code;
     const translateKeys = JSON.parse(localStorage.translateKeys);
+    debugger;
     return (translateKeys.filter(c => c.Code === code)[0] === undefined) ? code : translateKeys.filter(c => c.Code === code)[0].Description;
 }
 

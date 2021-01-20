@@ -5,6 +5,16 @@ namespace AdminLTE.Controllers
 {
     public class HomeController : Controller
     {
+        public HomeController()
+        {
+
+        }
+
+        public HomeController(IUnitOfWork unitOfWork)
+        {
+
+        }
+
         [HttpGet]
         public ActionResult Index()
         {

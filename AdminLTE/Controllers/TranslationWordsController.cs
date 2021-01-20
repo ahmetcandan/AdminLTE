@@ -1,9 +1,11 @@
 ﻿using AdminLTE.Core;
 using AdminLTE.Model;
 using AdminLTE.Models;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
+using System.Web.Http.Description;
 using System.Web.Mvc;
 
 namespace AdminLTE.Controllers
@@ -34,6 +36,22 @@ namespace AdminLTE.Controllers
                                         TranslationWordId = w.TranslationWordId
                                     });
             return PartialView(translationWords.ToList());
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [ResponseType(typeof(IList<TranslationWordView>))]
+        public JsonResult GetTranslationWord(string id)
+        {
+            id = id.ToLower();
+            var result = (from w in UnitOfWork.TranslationManager.GetTranslationWords(id)
+                          select new TranslationWordView
+                          {
+                              Code = w.Code,
+                              Description = w.Description,
+                              LanguageCode = id
+                          }).ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         // GET: TranslationWords/Create
